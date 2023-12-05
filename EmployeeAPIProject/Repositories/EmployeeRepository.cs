@@ -64,11 +64,12 @@ namespace EmployeeAPIProject.Repositories
             }
 
         }
-       private void save()
+       public void save()
         {
             _employeeDbContext.SaveChanges();
         }
 
+       
         public void Dispose()
         {
             _employeeDbContext?.Dispose();

@@ -18,9 +18,12 @@ namespace EmployeeAPIProject.Repositories
           void deleteEmployee(Guid id);
         //login user method
          Employee LoginUser(Login user);
-        // age calculation method
-         
-       
+
+        
+        public void save();
+
+
+
 
 
     }

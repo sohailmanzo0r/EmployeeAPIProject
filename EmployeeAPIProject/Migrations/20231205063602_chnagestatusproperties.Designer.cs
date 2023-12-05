@@ -4,6 +4,7 @@ using EmployeeAPIProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeAPIProject.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    partial class EmployeeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231205063602_chnagestatusproperties")]
+    partial class chnagestatusproperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,9 +60,6 @@ namespace EmployeeAPIProject.Migrations
 
                     b.Property<string>("StatusChangeReason")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("laterstatus")
-                        .HasColumnType("int");
 
                     b.Property<int>("status")
                         .HasColumnType("int");

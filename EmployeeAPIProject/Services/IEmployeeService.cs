@@ -19,5 +19,6 @@ namespace EmployeeAPIProject.Services
         Employee LoginUser(Login user);
         // age calculation method
         string calculateAge(string dob);
+        public void ChangeStatus(Guid id, Employee statusChangeRequest);
     }
 }

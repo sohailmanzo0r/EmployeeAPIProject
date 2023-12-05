@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+// Add a BackgroundService (can be added to Startup.cs)
 
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<EmployeeDbContext>(options => {
 // just changes
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped<IEmployee, EmployeeRepository>();
+ builder.Services.AddHostedService<StatusChangeBackgroundService>();
 
 //builder.Services.AddTransient<EmployeeDbContext>();
 

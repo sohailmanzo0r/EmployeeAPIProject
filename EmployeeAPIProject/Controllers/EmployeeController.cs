@@ -75,6 +75,12 @@ namespace EmployeeAPIProject.Controllers
                 
                 return Ok(_employeeService.LoginUser(user));
         }
+        [HttpPut("changeStatus/{id}")]
+        public IActionResult ChangeStatus([FromRoute] Guid id, Employee statusChangeRequest)
+        {
+            _employeeService.ChangeStatus(id, statusChangeRequest);
+            return Ok();
+        }
 
         private string calculateAge(string dob)
 
