@@ -27,8 +27,9 @@ namespace EmployeeAPIProject.Services
 
                     foreach (var employee in employees)
                     {
+
                         employee.status = employee.laterstatus; // Change status as needed
-                        employee.StatusChangeDate = null; // Reset the status change date
+                                                       // Reset the status change date
                                                           // Handle other status change actions
 
                         dbContext.SaveChanges();

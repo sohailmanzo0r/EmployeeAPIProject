@@ -130,6 +130,7 @@ namespace EmployeeAPIProject.Services
             var employee= _employeeRepository.GetEmployee(id);
             if (employee != null)
             {
+                
                 employee.status = statusChangeRequest.status;
                 employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
                     ? statusChangeRequest.StatusChangeDate
@@ -137,6 +138,7 @@ namespace EmployeeAPIProject.Services
 
                 // Store the reason and additional property
                 employee.StatusChangeReason = statusChangeRequest.StatusChangeReason;
+                employee.laterstatus = statusChangeRequest.laterstatus;
                 _employeeRepository.save();
             }
         }
