@@ -132,6 +132,7 @@ namespace EmployeeAPIProject.Services
             {
                 
                 employee.status = statusChangeRequest.status;
+                employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
                 employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
                     ? statusChangeRequest.StatusChangeDate
                     : DateTime.Now;

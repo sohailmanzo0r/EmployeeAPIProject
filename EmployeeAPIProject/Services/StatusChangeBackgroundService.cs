@@ -29,8 +29,8 @@ namespace EmployeeAPIProject.Services
                     {
 
                         employee.status = employee.laterstatus; // Change status as needed
-                                                       // Reset the status change date
-                                                          // Handle other status change actions
+                                                                // Reset the status change date
+                                                                // Handle other status change actions
 
                         dbContext.SaveChanges();
                     }
@@ -38,5 +38,9 @@ namespace EmployeeAPIProject.Services
             }
         }
     }
+
+    
+
+
 
 }
