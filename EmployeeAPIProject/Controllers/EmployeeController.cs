@@ -72,8 +72,13 @@ namespace EmployeeAPIProject.Controllers
         [HttpPost("LoginUser")]
         public IActionResult LoginUser(Login user)
         {
-                
-                return Ok(_employeeService.LoginUser(user));
+            var loggedInUser = _employeeService.LoginUser(user);
+            if (loggedInUser != null) { 
+                var token = _employeeService.GenerateJwtToken(loggedInUser);
+            return Ok(new { Token = token });
+        }
+            return Unauthorized();
+            
         }
         [HttpPut]
         [Route("changeStatus/{id:Guid}")]

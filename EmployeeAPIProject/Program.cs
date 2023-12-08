@@ -1,7 +1,10 @@
 using EmployeeAPIProject.Data;
 using EmployeeAPIProject.Repositories;
 using EmployeeAPIProject.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +26,28 @@ builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped<IEmployee, EmployeeRepository>();
  builder.Services.AddHostedService<StatusChangeBackgroundService>();
 
+
 //builder.Services.AddTransient<EmployeeDbContext>();
 
+
+
+ builder.Services.AddAuthentication(options =>
+ {
+     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+ }).AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidAudience = builder.Configuration["JWTKey:ValidAudience"],
+         ValidIssuer = builder.Configuration["JWTKey:ValidIssuer"],
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"]))
+     };
+ });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,6 +61,7 @@ app.UseHttpsRedirection();
 app.UseCors(policy=>policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

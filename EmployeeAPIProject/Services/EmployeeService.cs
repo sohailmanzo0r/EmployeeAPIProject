@@ -3,16 +3,22 @@ using EmployeeAPIProject.Models;
 using EmployeeAPIProject.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace EmployeeAPIProject.Services
 {
     public class EmployeeService : IEmployeeService
     {
         protected readonly IEmployee _employeeRepository;
+        private readonly IConfiguration _configuration;
 
-        public EmployeeService(IEmployee employeeRepository)
+        public EmployeeService(IEmployee employeeRepository, IConfiguration configuration)
         {
              _employeeRepository = employeeRepository;
+             _configuration = configuration;
         }
         public void AddEmployee(Employee addedemployee)
              
@@ -143,5 +149,29 @@ namespace EmployeeAPIProject.Services
                 _employeeRepository.save();
             }
         }
+
+        public string GenerateJwtToken(Employee user)
+        {
+            var claims = new List<Claim>
+            {
+            new Claim(ClaimTypes.Email, user.Email),
+              new Claim(ClaimTypes.Name, user.Name),
+            // Add other claims as needed
+           };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"]));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                _configuration["JWTKey:ValidIssuer"],
+                _configuration["JWTKey:ValidAudience"],
+                claims,
+                expires: DateTime.Now.AddHours(3),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+           }
     }
 }
+
