@@ -154,8 +154,8 @@ namespace EmployeeAPIProject.Services
         {
             var claims = new List<Claim>
             {
-            new Claim(ClaimTypes.Email, user.Email),
-              new Claim(ClaimTypes.Name, user.Name),
+            new Claim(ClaimTypes.Name, user.Email),
+             
             // Add other claims as needed
            };
 
@@ -163,9 +163,9 @@ namespace EmployeeAPIProject.Services
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                _configuration["JWTKey:ValidIssuer"],
-                _configuration["JWTKey:ValidAudience"],
-                claims,
+               issuer: _configuration["JWTKey:ValidIssuer"],
+               audience: _configuration["JWTKey:ValidAudience"],
+               claims: claims,
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: credentials
             );

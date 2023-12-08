@@ -3,11 +3,13 @@ using EmployeeAPIProject.Migrations;
 using EmployeeAPIProject.Models;
 using EmployeeAPIProject.Repositories;
 using EmployeeAPIProject.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Controllers
 {
+   
     [ApiController]
     [Route("api/employees")]
     public class EmployeeController : Controller
@@ -19,7 +21,7 @@ namespace EmployeeAPIProject.Controllers
              
              _employeeService = employeeService;
         }
-     
+        [Authorize]
         [HttpGet]
         public   IActionResult GetAllEmployees()
         {
