@@ -17,11 +17,11 @@ namespace EmployeeAPIProject.Services
 
         public EmployeeService(IEmployee employeeRepository, IConfiguration configuration)
         {
-             _employeeRepository = employeeRepository;
-             _configuration = configuration;
+            _employeeRepository = employeeRepository;
+            _configuration = configuration;
         }
         public void AddEmployee(Employee addedemployee)
-             
+
         {
             addedemployee.Id = new Guid();
             _employeeRepository.AddEmployee(addedemployee);
@@ -57,7 +57,7 @@ namespace EmployeeAPIProject.Services
 
         public void deleteEmployee(Guid id)
         {
-            _employeeRepository.deleteEmployee(id); 
+            _employeeRepository.deleteEmployee(id);
         }
 
         public IEnumerable<EmployeeDTO> GetAllEmployees()
@@ -76,9 +76,9 @@ namespace EmployeeAPIProject.Services
                 employeeDTO.Salary = emp.Salary;
                 employeeDTO.DOB = emp.DOB;
                 employeeDTO.status = emp.status;
-                employeeDTO.StatusChangeReason= emp.StatusChangeReason;
-                employeeDTO.StatusChangeDate= emp.StatusChangeDate;
-                employeeDTO.StatusChangeChoice= emp.StatusChangeChoice;
+                employeeDTO.StatusChangeReason = emp.StatusChangeReason;
+                employeeDTO.StatusChangeDate = emp.StatusChangeDate;
+                employeeDTO.StatusChangeChoice = emp.StatusChangeChoice;
                 employeeDTO.laterstatus = emp.laterstatus;
                 employeeDTO.Age = calculateAge(emp.DOB);
                 employees1.Add(employeeDTO);
@@ -116,8 +116,8 @@ namespace EmployeeAPIProject.Services
 
         public Employee LoginUser(Login user)
         {
-          
-            var employee= _employeeRepository.LoginUser(user);
+
+            var employee = _employeeRepository.LoginUser(user);
             if (employee == null)
             {
                 return null;
@@ -128,15 +128,15 @@ namespace EmployeeAPIProject.Services
         public void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest)
         {
 
-           _employeeRepository.UpdateEmployee(id, EmployeeUpdateRequest);
+            _employeeRepository.UpdateEmployee(id, EmployeeUpdateRequest);
         }
 
         public void ChangeStatus(Guid id, Employee statusChangeRequest)
         {
-            var employee= _employeeRepository.GetEmployee(id);
+            var employee = _employeeRepository.GetEmployee(id);
             if (employee != null)
             {
-                
+
                 employee.status = statusChangeRequest.status;
                 employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
                 employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
@@ -155,23 +155,25 @@ namespace EmployeeAPIProject.Services
             var claims = new List<Claim>
             {
             new Claim(ClaimTypes.Name, user.Email),
+           
              
             // Add other claims as needed
            };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-               issuer: _configuration["JWTKey:ValidIssuer"],
-               audience: _configuration["JWTKey:ValidAudience"],
-               claims: claims,
-                expires: DateTime.Now.AddHours(3),
-                signingCredentials: credentials
-            );
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.UtcNow.AddHours(2),
+                signingCredentials: signIn);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-           }
+            return  new JwtSecurityTokenHandler().WriteToken(token);
+        }
+               
     }
+
 }
 
