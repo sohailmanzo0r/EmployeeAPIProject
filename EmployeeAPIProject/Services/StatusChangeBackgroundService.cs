@@ -22,15 +22,15 @@ namespace EmployeeAPIProject.Services
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<EmployeeDbContext>();
                     var employees = dbContext.employees
-                        .Where(e => e.StatusChangeDate.HasValue && e.StatusChangeDate <= DateTime.Now)
+                        .Where(e => e.EmployeeStatus.StatusChangeDate.HasValue && e.EmployeeStatus.StatusChangeDate <= DateTime.Now)
                         .ToList();
 
                     foreach (var employee in employees)
                     {
-
-                        employee.status = employee.laterstatus; // Change status as needed
-                                                                // Reset the status change date
-                                                                // Handle other status change actions
+                       
+                        employee.EmployeeStatus.status = (Models.Status)employee.EmployeeStatus.laterstatus; // Change status as needed
+                        // Reset the status change date
+                        // Handle other status change actions
 
                         dbContext.SaveChanges();
                     }

@@ -16,13 +16,14 @@ namespace EmployeeAPIProject.Repositories
         {
             _employeeDbContext = employeeDbContext;
         }
-        //public EmployeeRepository( )
+        //public EmployeeRepository()
         //{
         //    _employeeDbContext = new EmployeeDbContext();
         //}
 
         public void AddEmployee(  Employee addedemployee)
         {
+
            
               _employeeDbContext.employees.Add(addedemployee);
                    save();

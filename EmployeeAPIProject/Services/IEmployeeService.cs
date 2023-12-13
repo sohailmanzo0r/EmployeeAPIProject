@@ -20,6 +20,6 @@ namespace EmployeeAPIProject.Services
         // age calculation method
         string calculateAge(string dob);
         public string GenerateJwtToken(Employee user);
-        public void ChangeStatus(Guid id, Employee statusChangeRequest);
+        public void ChangeStatus(Guid id, EmployeeStatus statusChangeRequest);
     }
 }
