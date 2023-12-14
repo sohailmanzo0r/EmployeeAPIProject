@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Controllers
 {
-    [Authorize]
+  //  [Authorize]
     [ApiController]
     [Route("api/employees")]
     public class EmployeeController : Controller
@@ -86,7 +86,7 @@ namespace EmployeeAPIProject.Controllers
         }
         [HttpPut]
         [Route("changeStatus/{id:Guid}")]
-        public IActionResult ChangeStatus([FromRoute] Guid id, Employee statusChangeRequest)
+        public IActionResult ChangeStatus([FromRoute] Guid id, EmployeeStatus statusChangeRequest)
         {
             _employeeService.ChangeStatus(id, statusChangeRequest);
             return Ok();
@@ -97,7 +97,17 @@ namespace EmployeeAPIProject.Controllers
         {
            return _employeeService.calculateAge(dob);
         }
+        [HttpGet("GetJobDescription")]
+        public IActionResult GetJobDescriptions()
+        {
 
+            return Ok(_employeeService.GetJobDescriptions());
+        }
+        [HttpGet("GetEmployeeStatus")]
+        public IActionResult GetEmployeeStatus()
+        {
 
+            return Ok(_employeeService.GetEmployeeStatus());
+        }
     }
 }

@@ -129,7 +129,7 @@ namespace EmployeeAPIProject.Services
             if (employee != null)
             {
 
-                employee.EmployeeStatus.status = statusChangeRequest.status;
+                employee.EmployeeStatus = statusChangeRequest;
                 employee.EmployeeStatus.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
                 employee.EmployeeStatus.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
                     ? statusChangeRequest.StatusChangeDate
@@ -164,7 +164,16 @@ namespace EmployeeAPIProject.Services
 
             return  new JwtSecurityTokenHandler().WriteToken(token);
         }
-               
+
+        public IEnumerable<JobDescription> GetJobDescriptions()
+        {
+            return _employeeRepository.GetJobDescriptions();
+        }
+
+        public IEnumerable<EmployeeStatus> GetEmployeeStatus()
+        {
+            return _employeeRepository.GetEmployeeStatus();
+        }
     }
 
 }

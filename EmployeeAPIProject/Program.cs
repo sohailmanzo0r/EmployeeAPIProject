@@ -59,7 +59,7 @@ builder.Services.AddDbContext<EmployeeDbContext>(options => {
 // just changes
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped<IEmployee, EmployeeRepository>();
- builder.Services.AddHostedService<StatusChangeBackgroundService>();
+//builder.Services.AddHostedService<StatusChangeBackgroundService>();
 
 
 //builder.Services.AddTransient<EmployeeDbContext>();

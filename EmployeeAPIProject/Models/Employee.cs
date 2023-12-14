@@ -13,11 +13,11 @@ namespace EmployeeAPIProject.Models
         public string Password { get; set; }
        public string DOB { get; set; }
         
-        public int JobId { get; set; }
+        public Guid? JobId { get; set; }
         public JobDescription JobDescription { get; set; }
 
-        public Guid StatusId { get; set; }
-        public EmployeeStatus EmployeeStatus { get; set; }
+        public Guid? StatusId { get; set; }
+        public EmployeeStatus? EmployeeStatus { get; set; }
 
         public List<EmployeeSupervisor> Supervisors { get; set; }
         public List<LoginLog> LoginLogs { get; set; }
@@ -35,7 +35,7 @@ namespace EmployeeAPIProject.Models
         public string Password { get; set; }
         public string DOB { get; set; }
          public string Age { get; set; }
-        public int JobId { get; set; }
+        public Guid? JobId { get; set; }
         public JobDescription JobDescription { get; set; }
 
         public Guid StatusId { get; set; }

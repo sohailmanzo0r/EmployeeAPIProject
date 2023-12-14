@@ -37,6 +37,9 @@ namespace EmployeeAPIProject.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,9 +52,153 @@ namespace EmployeeAPIProject.Migrations
                     b.Property<long>("Salary")
                         .HasColumnType("bigint");
 
+                    b.Property<Guid?>("StatusId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("StatusId");
+
                     b.ToTable("employees");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.EmployeeStatus", b =>
+                {
+                    b.Property<Guid>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StatusChangeChoice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StatusChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusChangeReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("laterstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("EmployeeStatuses");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.EmployeeSupervisor", b =>
+                {
+                    b.Property<Guid>("SupervisorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SupervisorType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SupervisorId", "EmployeeId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeSupervisors");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.JobDescription", b =>
+                {
+                    b.Property<Guid>("JobId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("JobTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Responsibilities")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("JobId");
+
+                    b.ToTable("JobDescriptions");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.LoginLog", b =>
+                {
+                    b.Property<Guid>("LogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LoginTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LogoutTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("LogId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("LoginLogs");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.Employee", b =>
+                {
+                    b.HasOne("EmployeeAPIProject.Models.JobDescription", "JobDescription")
+                        .WithMany("Employees")
+                        .HasForeignKey("JobId");
+
+                    b.HasOne("EmployeeAPIProject.Models.EmployeeStatus", "EmployeeStatus")
+                        .WithMany("Employees")
+                        .HasForeignKey("StatusId");
+
+                    b.Navigation("EmployeeStatus");
+
+                    b.Navigation("JobDescription");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.EmployeeSupervisor", b =>
+                {
+                    b.HasOne("EmployeeAPIProject.Models.Employee", "Employee")
+                        .WithMany("Supervisors")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.LoginLog", b =>
+                {
+                    b.HasOne("EmployeeAPIProject.Models.Employee", "Employee")
+                        .WithMany("LoginLogs")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.Employee", b =>
+                {
+                    b.Navigation("LoginLogs");
+
+                    b.Navigation("Supervisors");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.EmployeeStatus", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("EmployeeAPIProject.Models.JobDescription", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

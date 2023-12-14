@@ -24,8 +24,11 @@ namespace EmployeeAPIProject.Repositories
         public void AddEmployee(  Employee addedemployee)
         {
 
-           
-              _employeeDbContext.employees.Add(addedemployee);
+            var jobdescription = _employeeDbContext.JobDescription.Find(addedemployee.JobId);
+            var status= _employeeDbContext.EmployeeStatus.Find(addedemployee.StatusId);
+            addedemployee.EmployeeStatus = status;
+            addedemployee.JobDescription = jobdescription;
+            _employeeDbContext.employees.Add(addedemployee);
                    save();
              
 
@@ -41,18 +44,31 @@ namespace EmployeeAPIProject.Repositories
         }
        public  IEnumerable<Employee> GetAllEmployees()
         {
-            return _employeeDbContext.employees.ToList();
-             
+            var employees = _employeeDbContext.employees
+                               .Include(e => e.JobDescription)
+                                 .Include(e => e.EmployeeStatus).ToList();
+
+            if (employees == null)
+            {
+                return null;
+            }
+            return employees;
         }
 
         public  Employee GetEmployee( Guid id)
         {
-            return _employeeDbContext.employees.FirstOrDefault(em => em.Id == id);     
+            return _employeeDbContext.employees
+                                  .Include(e => e.JobDescription)
+                                  .Include(e => e.EmployeeStatus)
+                                 .FirstOrDefault(em => em.Id == id);     
         }
 
         public Employee LoginUser(Login user)
         {
-             return _employeeDbContext.employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
+              
+            
+
+            return _employeeDbContext.employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd); 
             
         }
 
@@ -74,6 +90,17 @@ namespace EmployeeAPIProject.Repositories
         public void Dispose()
         {
             _employeeDbContext?.Dispose();
+        }
+
+        public IEnumerable<JobDescription> GetJobDescriptions()
+        {
+          return _employeeDbContext.JobDescription.ToList();
+            
+        }
+
+        public IEnumerable<EmployeeStatus> GetEmployeeStatus()
+        {
+            return _employeeDbContext.EmployeeStatus.ToList();
         }
     }
 }
