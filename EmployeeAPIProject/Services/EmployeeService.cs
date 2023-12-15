@@ -63,6 +63,10 @@ namespace EmployeeAPIProject.Services
         public IEnumerable<EmployeeDTO> GetAllEmployees()
         {
             var employees = _employeeRepository.GetAllEmployees();
+            if (employees == null)
+            {
+                return null;
+            }
             List<EmployeeDTO> employees1 = new List<EmployeeDTO>();
             foreach (Employee emp in employees)
             {
@@ -76,6 +80,10 @@ namespace EmployeeAPIProject.Services
                 employeeDTO.Salary = emp.Salary;
                 employeeDTO.DOB = emp.DOB;
                 employeeDTO.EmployeeStatus = emp.EmployeeStatus;
+                employeeDTO.JobDescription = emp.JobDescription;
+                employeeDTO.JobId = emp.JobId;
+                employeeDTO.StatusId= emp.StatusId; 
+
                 employeeDTO.LaterStatus= emp.LaterStatus;
                 employeeDTO.StatusChangeDate= emp.StatusChangeDate;
                 employeeDTO.StatusChangeReason= emp.StatusChangeReason;
@@ -105,6 +113,9 @@ namespace EmployeeAPIProject.Services
             emp1.StatusChangeReason = emp.StatusChangeReason;
             emp1.StatusChangeChoice = emp.StatusChangeChoice;
             emp1.Age = calculateAge(emp.DOB);
+            emp1.JobDescription = emp.JobDescription;
+            emp1.JobId = emp.JobId;
+            emp1.StatusId = emp.StatusId;
 
             if (emp1 == null)
             {
@@ -131,21 +142,21 @@ namespace EmployeeAPIProject.Services
             _employeeRepository.UpdateEmployee(id, EmployeeUpdateRequest);
         }
 
-        public void ChangeStatus(Guid id, EmployeeStatus statusChangeRequest)
+        public void ChangeStatus(Guid id, Employee statusChangeRequest)
         {
             var employee = _employeeRepository.GetEmployee(id);
             if (employee != null)
             {
 
-                employee.EmployeeStatus = statusChangeRequest;
-                employee.EmployeeStatus.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
-                employee.EmployeeStatus.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
+                employee.EmployeeStatus = statusChangeRequest.EmployeeStatus;
+                employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
+                employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
                     ? statusChangeRequest.StatusChangeDate
                     : DateTime.Now;
 
                 // Store the reason and additional property
-                employee.EmployeeStatus.StatusChangeReason = statusChangeRequest.StatusChangeReason;
-                employee.EmployeeStatus.laterstatus = statusChangeRequest.laterstatus;
+                employee.StatusChangeReason = statusChangeRequest.StatusChangeReason;
+                employee.StatusId= statusChangeRequest.StatusId;
                 _employeeRepository.save();
             }
         }

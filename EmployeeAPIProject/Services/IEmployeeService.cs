@@ -23,7 +23,7 @@ namespace EmployeeAPIProject.Services
         Employee LoginUser(Login user);
        
         string calculateAge(string dob);
-        public string GenerateJwtToken(Employee user);
-        public void ChangeStatus(Guid id, EmployeeStatus statusChangeRequest);
+          string GenerateJwtToken(Employee user);
+        void ChangeStatus(Guid id, Employee statusChangeRequest);
     }
 }

@@ -62,10 +62,14 @@ namespace EmployeeAPIProject.Repositories
 
         public Employee LoginUser(Login user)
         {
-              
-            
+            var employee = _employeeDbContext.employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
 
-            return _employeeDbContext.employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd); 
+            if (employee == null)
+            {
+                return null;
+            }
+
+            return employee;
             
         }
 

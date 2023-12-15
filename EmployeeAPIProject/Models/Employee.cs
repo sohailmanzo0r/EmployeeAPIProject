@@ -17,11 +17,11 @@ namespace EmployeeAPIProject.Models
         public DateTime? StatusChangeDate { get; set; }
         public string? StatusChangeReason { get; set; }
 
-        public Guid? JobId { get; set; }
+        public Guid JobId { get; set; }
         public JobDescription JobDescription { get; set; }
 
-        public Guid? StatusId { get; set; }
-        public EmployeeStatus? EmployeeStatus { get; set; }
+        public Guid StatusId { get; set; }
+        public EmployeeStatus EmployeeStatus { get; set; }
 
         public List<EmployeeSupervisor> Supervisors { get; set; }
         public List<LoginLog> LoginLogs { get; set; }
@@ -43,7 +43,7 @@ namespace EmployeeAPIProject.Models
         public DateTime? StatusChangeDate { get; set; }
         public string? StatusChangeReason { get; set; }
         public string Age { get; set; }
-        public Guid? JobId { get; set; }
+        public Guid JobId { get; set; }
 
         public JobDescription JobDescription { get; set; }
 
@@ -57,9 +57,8 @@ namespace EmployeeAPIProject.Models
     public enum Status
     {
         Active=1,
-        Pending=2,
-        Suspend=3,
-        Terminate=4,
-        Delete=5
+        InActive=2,
+        OnLeave=3,
+        Terminate=4
     }
 }

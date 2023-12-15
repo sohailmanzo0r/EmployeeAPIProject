@@ -86,7 +86,7 @@ namespace EmployeeAPIProject.Controllers
         }
         [HttpPut]
         [Route("changeStatus/{id:Guid}")]
-        public IActionResult ChangeStatus([FromRoute] Guid id, EmployeeStatus statusChangeRequest)
+        public IActionResult ChangeStatus([FromRoute] Guid id, Employee statusChangeRequest)
         {
             _employeeService.ChangeStatus(id, statusChangeRequest);
             return Ok();
