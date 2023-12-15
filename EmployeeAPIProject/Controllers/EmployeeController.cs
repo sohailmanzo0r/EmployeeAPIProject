@@ -109,5 +109,11 @@ namespace EmployeeAPIProject.Controllers
 
             return Ok(_employeeService.GetEmployeeStatus());
         }
+        [HttpGet("GetSupervisors")]
+        public IActionResult GetSupervisors()
+        {
+
+            return Ok(_employeeService.GetSupervisors());
+        }
     }
 }

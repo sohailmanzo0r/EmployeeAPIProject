@@ -76,6 +76,10 @@ namespace EmployeeAPIProject.Services
                 employeeDTO.Salary = emp.Salary;
                 employeeDTO.DOB = emp.DOB;
                 employeeDTO.EmployeeStatus = emp.EmployeeStatus;
+                employeeDTO.LaterStatus= emp.LaterStatus;
+                employeeDTO.StatusChangeDate= emp.StatusChangeDate;
+                employeeDTO.StatusChangeReason= emp.StatusChangeReason;
+                employeeDTO.StatusChangeChoice= emp.StatusChangeChoice;
                 employeeDTO.Age = calculateAge(emp.DOB);
                 employees1.Add(employeeDTO);
 
@@ -96,6 +100,10 @@ namespace EmployeeAPIProject.Services
             emp1.Salary = emp.Salary;
             emp1.DOB = emp.DOB;
             emp1.EmployeeStatus = emp.EmployeeStatus;
+            emp1.LaterStatus = emp.LaterStatus;
+            emp1.StatusChangeDate = emp.StatusChangeDate;
+            emp1.StatusChangeReason = emp.StatusChangeReason;
+            emp1.StatusChangeChoice = emp.StatusChangeChoice;
             emp1.Age = calculateAge(emp.DOB);
 
             if (emp1 == null)
@@ -173,6 +181,11 @@ namespace EmployeeAPIProject.Services
         public IEnumerable<EmployeeStatus> GetEmployeeStatus()
         {
             return _employeeRepository.GetEmployeeStatus();
+        }
+
+        public IEnumerable<EmployeeSupervisor> GetSupervisors()
+        {
+             return _employeeRepository.GetSupervisors();
         }
     }
 

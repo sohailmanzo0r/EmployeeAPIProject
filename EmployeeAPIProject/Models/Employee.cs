@@ -12,7 +12,11 @@ namespace EmployeeAPIProject.Models
         public string Department { get; set; }
         public string Password { get; set; }
        public string DOB { get; set; }
-        
+        public Status? LaterStatus { get; set; }
+        public string? StatusChangeChoice { get; set; }
+        public DateTime? StatusChangeDate { get; set; }
+        public string? StatusChangeReason { get; set; }
+
         public Guid? JobId { get; set; }
         public JobDescription JobDescription { get; set; }
 
@@ -34,8 +38,13 @@ namespace EmployeeAPIProject.Models
         public string Department { get; set; }
         public string Password { get; set; }
         public string DOB { get; set; }
-         public string Age { get; set; }
+        public Status? LaterStatus { get; set; }
+        public string? StatusChangeChoice { get; set; }
+        public DateTime? StatusChangeDate { get; set; }
+        public string? StatusChangeReason { get; set; }
+        public string Age { get; set; }
         public Guid? JobId { get; set; }
+
         public JobDescription JobDescription { get; set; }
 
         public Guid StatusId { get; set; }

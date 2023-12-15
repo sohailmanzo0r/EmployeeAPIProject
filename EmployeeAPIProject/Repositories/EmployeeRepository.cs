@@ -16,10 +16,7 @@ namespace EmployeeAPIProject.Repositories
         {
             _employeeDbContext = employeeDbContext;
         }
-        //public EmployeeRepository()
-        //{
-        //    _employeeDbContext = new EmployeeDbContext();
-        //}
+        
 
         public void AddEmployee(  Employee addedemployee)
         {
@@ -85,22 +82,26 @@ namespace EmployeeAPIProject.Repositories
         {
             _employeeDbContext.SaveChanges();
         }
-
-       
-        public void Dispose()
-        {
-            _employeeDbContext?.Dispose();
-        }
-
         public IEnumerable<JobDescription> GetJobDescriptions()
         {
-          return _employeeDbContext.JobDescription.ToList();
-            
+            return _employeeDbContext.JobDescription.ToList();
+
         }
 
         public IEnumerable<EmployeeStatus> GetEmployeeStatus()
         {
             return _employeeDbContext.EmployeeStatus.ToList();
         }
+        public IEnumerable<EmployeeSupervisor> GetSupervisors()
+        {
+            return _employeeDbContext.EmployeeSupervisor.ToList();
+        }
+
+        public void Dispose()
+        {
+            _employeeDbContext?.Dispose();
+        }
+
+        
     }
 }

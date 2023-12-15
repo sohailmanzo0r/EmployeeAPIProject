@@ -9,7 +9,9 @@ namespace EmployeeAPIProject.Services
           IEnumerable<EmployeeDTO> GetAllEmployees();
           IEnumerable<JobDescription> GetJobDescriptions();
           IEnumerable<EmployeeStatus> GetEmployeeStatus();
-       
+        IEnumerable<EmployeeSupervisor> GetSupervisors();
+
+
         void AddEmployee(Employee addedemployee);
          
         EmployeeDTO GetEmployee([FromRoute] Guid id);

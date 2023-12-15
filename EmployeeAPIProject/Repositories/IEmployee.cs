@@ -7,9 +7,10 @@ namespace EmployeeAPIProject.Repositories
     public interface IEmployee :IDisposable
     {
         // Get all employees
-        public IEnumerable<Employee> GetAllEmployees();
-        public IEnumerable<JobDescription> GetJobDescriptions();
-        public IEnumerable<EmployeeStatus> GetEmployeeStatus();
+          IEnumerable<Employee> GetAllEmployees();
+          IEnumerable<JobDescription> GetJobDescriptions();
+          IEnumerable<EmployeeStatus> GetEmployeeStatus();
+          IEnumerable<EmployeeSupervisor> GetSupervisors();
         //add new employee
         void AddEmployee(Employee addedemployee);
         //get employee by id
@@ -23,7 +24,7 @@ namespace EmployeeAPIProject.Repositories
          Employee LoginUser(Login user);
 
         
-        public void save();
+          void save();
 
 
 
