@@ -7,7 +7,7 @@ namespace EmployeeAPIProject.Data
     {
        
         public EmployeeDbContext(DbContextOptions<EmployeeDbContext> options):base(options) { }
-      public  DbSet<Employee> employees {  get; set; }
+      public  DbSet<Employee> Employees {  get; set; }
         public DbSet<JobDescription> JobDescription { get; set; }
         public DbSet<EmployeeStatus> EmployeeStatus { get; set; }
         public DbSet<EmployeeSupervisor> EmployeeSupervisor { get; set; }

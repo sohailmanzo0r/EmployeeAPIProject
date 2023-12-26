@@ -82,12 +82,12 @@ namespace EmployeeAPIProject.Services
                 employeeDTO.EmployeeStatus = emp.EmployeeStatus;
                 employeeDTO.JobDescription = emp.JobDescription;
                 employeeDTO.JobId = emp.JobId;
-                employeeDTO.StatusId= emp.StatusId; 
+                employeeDTO.StatusId = emp.StatusId;
 
-                employeeDTO.LaterStatus= emp.LaterStatus;
-                employeeDTO.StatusChangeDate= emp.StatusChangeDate;
-                employeeDTO.StatusChangeReason= emp.StatusChangeReason;
-                employeeDTO.StatusChangeChoice= emp.StatusChangeChoice;
+                employeeDTO.LaterStatus = emp.LaterStatus;
+                employeeDTO.StatusChangeDate = emp.StatusChangeDate;
+                employeeDTO.StatusChangeReason = emp.StatusChangeReason;
+                employeeDTO.StatusChangeChoice = emp.StatusChangeChoice;
                 employeeDTO.Age = calculateAge(emp.DOB);
                 employees1.Add(employeeDTO);
 

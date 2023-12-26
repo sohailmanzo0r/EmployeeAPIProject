@@ -25,7 +25,7 @@ namespace EmployeeAPIProject.Repositories
             var status= _employeeDbContext.EmployeeStatus.Find(addedemployee.StatusId);
             addedemployee.EmployeeStatus = status;
             addedemployee.JobDescription = jobdescription;
-            _employeeDbContext.employees.Add(addedemployee);
+            _employeeDbContext.Employees.Add(addedemployee);
                    save();
              
 
@@ -35,13 +35,13 @@ namespace EmployeeAPIProject.Repositories
 
         public void deleteEmployee([FromRoute] Guid id)
         {
-        _employeeDbContext.employees.Remove(_employeeDbContext.employees.Find(id));
+        _employeeDbContext.Employees.Remove(_employeeDbContext.Employees.Find(id));
                 save();
             
         }
        public  IEnumerable<Employee> GetAllEmployees()
         {
-            var employees = _employeeDbContext.employees
+            var employees = _employeeDbContext.Employees
                                .Include(e => e.JobDescription)
                                  .Include(e => e.EmployeeStatus).ToList();
 
@@ -54,15 +54,17 @@ namespace EmployeeAPIProject.Repositories
 
         public  Employee GetEmployee( Guid id)
         {
-            return _employeeDbContext.employees
+             var employees= _employeeDbContext.Employees
                                   .Include(e => e.JobDescription)
                                   .Include(e => e.EmployeeStatus)
-                                 .FirstOrDefault(em => em.Id == id);     
+                                 .FirstOrDefault(em => em.Id == id);
+
+            return employees;
         }
 
         public Employee LoginUser(Login user)
         {
-            var employee = _employeeDbContext.employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
+            var employee = _employeeDbContext.Employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
 
             if (employee == null)
             {
@@ -75,7 +77,7 @@ namespace EmployeeAPIProject.Repositories
 
         public void UpdateEmployee( Guid id, Employee EmployeeUpdateRequest)
         {  
-            if (_employeeDbContext.employees.Any(em => em.Id == id))
+            if (_employeeDbContext.Employees.Any(em => em.Id == id))
             {
                 _employeeDbContext.Update(EmployeeUpdateRequest);
                 save();

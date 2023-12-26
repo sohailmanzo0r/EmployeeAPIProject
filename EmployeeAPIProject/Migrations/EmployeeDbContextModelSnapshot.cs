@@ -37,8 +37,11 @@ namespace EmployeeAPIProject.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("JobId")
+                    b.Property<Guid>("JobId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("LaterStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -52,7 +55,16 @@ namespace EmployeeAPIProject.Migrations
                     b.Property<long>("Salary")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("StatusId")
+                    b.Property<string>("StatusChangeChoice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StatusChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusChangeReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("StatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -70,24 +82,12 @@ namespace EmployeeAPIProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StatusChangeChoice")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("StatusChangeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StatusChangeReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("laterstatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("status")
+                    b.Property<int>("StatusName")
                         .HasColumnType("int");
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("EmployeeStatuses");
+                    b.ToTable("EmployeeStatus");
                 });
 
             modelBuilder.Entity("EmployeeAPIProject.Models.EmployeeSupervisor", b =>
@@ -105,7 +105,7 @@ namespace EmployeeAPIProject.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeSupervisors");
+                    b.ToTable("EmployeeSupervisor");
                 });
 
             modelBuilder.Entity("EmployeeAPIProject.Models.JobDescription", b =>
@@ -122,7 +122,7 @@ namespace EmployeeAPIProject.Migrations
 
                     b.HasKey("JobId");
 
-                    b.ToTable("JobDescriptions");
+                    b.ToTable("JobDescription");
                 });
 
             modelBuilder.Entity("EmployeeAPIProject.Models.LoginLog", b =>
@@ -144,18 +144,22 @@ namespace EmployeeAPIProject.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("LoginLogs");
+                    b.ToTable("LoginLog");
                 });
 
             modelBuilder.Entity("EmployeeAPIProject.Models.Employee", b =>
                 {
                     b.HasOne("EmployeeAPIProject.Models.JobDescription", "JobDescription")
                         .WithMany("Employees")
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EmployeeAPIProject.Models.EmployeeStatus", "EmployeeStatus")
                         .WithMany("Employees")
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EmployeeStatus");
 
