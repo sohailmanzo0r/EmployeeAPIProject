@@ -10,19 +10,20 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add a BackgroundService (can be added to Startup.cs)
-
-// Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(options =>
- options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())) ;
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-    options.JsonSerializerOptions.WriteIndented = true;
-});
+ 
+//builder.Services.AddControllers().AddJsonOptions(options =>
+//{
+//    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//    options.JsonSerializerOptions.WriteIndented = true;
+//});
 
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddControllers()
+        .AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+        });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -62,16 +63,17 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddDbContext<EmployeeDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeAPIDB"));
-    });
-// Add services
-// just changes
+     
+});
+ 
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped<IEmployee, EmployeeRepository>();
+builder.Services.AddScoped<DbContext, EmployeeDbContext>();
 //builder.Services.AddHostedService<StatusChangeBackgroundService>();
 
 
 //builder.Services.AddTransient<EmployeeDbContext>();
- 
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

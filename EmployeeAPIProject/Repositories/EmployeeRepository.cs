@@ -75,16 +75,26 @@ namespace EmployeeAPIProject.Repositories
             
         }
 
-        public void UpdateEmployee( Guid id, Employee EmployeeUpdateRequest)
-        {  
-            if (_employeeDbContext.Employees.Any(em => em.Id == id))
+        public void UpdateEmployee(Guid id, Employee EmployeeUpdateRequest)
+        {
+            var existingEmployee = _employeeDbContext.Employees.FirstOrDefault(em => em.Id == id);
+            if (existingEmployee != null)
             {
-                _employeeDbContext.Update(EmployeeUpdateRequest);
-                save();
-            }
+                // Update the properties of the existing entity
+                _employeeDbContext.Entry(existingEmployee).CurrentValues.SetValues(EmployeeUpdateRequest);
 
+                // Save the changes
+                _employeeDbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Employee Does not exist you are trying to update");
+                // Handle the case where the employee does not exist
+                // You might want to throw an exception or handle it as per your business logic
+            }
         }
-       public void save()
+
+        public void save()
         {
             _employeeDbContext.SaveChanges();
         }
