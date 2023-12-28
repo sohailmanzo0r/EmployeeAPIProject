@@ -148,7 +148,7 @@ namespace EmployeeAPIProject.Services
             if (employee != null)
             {
 
-                employee.EmployeeStatus = statusChangeRequest.EmployeeStatus;
+                employee.EmployeeStatus.StatusId = statusChangeRequest.EmployeeStatus.StatusId;
                 employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
                 employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
                     ? statusChangeRequest.StatusChangeDate
