@@ -77,14 +77,18 @@ namespace EmployeeAPIProject.Repositories
 
         public void UpdateEmployee(Guid id, Employee EmployeeUpdateRequest)
         {
-            var existingEmployee = _employeeDbContext.Employees.FirstOrDefault(em => em.Id == id);
+            var existingEmployee = _employeeDbContext.Employees
+                                    .Include(e => e.JobDescription)
+                                 .Include(e => e.EmployeeStatus)
+                                 .FirstOrDefault(em => em.Id == id);
             if (existingEmployee != null)
             {
-                // Update the properties of the existing entity
+                
+                //_employeeDbContext.Entry(existingEmployee).State = EntityState.Modified;
                 _employeeDbContext.Entry(existingEmployee).CurrentValues.SetValues(EmployeeUpdateRequest);
 
                 // Save the changes
-                _employeeDbContext.SaveChanges();
+                save();
             }
             else
             {

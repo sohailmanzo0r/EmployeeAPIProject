@@ -37,6 +37,11 @@ namespace EmployeeAPIProject.Data
 
             modelBuilder.Entity<EmployeeSupervisor>()
                 .HasKey(es => new { es.SupervisorId, es.EmployeeId });
+            modelBuilder.Entity<EmployeeSupervisor>()
+    .HasOne(es => es.Employee)
+    .WithMany()
+    .HasForeignKey(es => es.EmployeeId)
+    .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<EmployeeStatus>()
                 .HasMany(es => es.Employees)
