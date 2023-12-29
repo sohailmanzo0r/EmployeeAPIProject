@@ -16,8 +16,10 @@ namespace EmployeeAPIProject.Repositories
         //get employee by id
           Employee GetEmployee([FromRoute] Guid id);
 
+        void AddSupervisor(SupervisorDTO supervisorDTO);
+
         //update employee by id
-          void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest);
+        void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest);
         //Delete employee by id
           void deleteEmployee(Guid id);
         //login user method

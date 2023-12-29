@@ -15,4 +15,10 @@ namespace EmployeeAPIProject.Models
         // Navigation Properties
         public Employee Employee { get; set; }
     }
+    public class SupervisorDTO
+    {
+        public Guid SupervisorId { get; set; }
+        public Guid EmployeeId { get; set; }
+        public string SupervisorType { get; set; }
+    }
 }

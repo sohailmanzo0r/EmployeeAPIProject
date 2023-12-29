@@ -116,12 +116,25 @@ namespace EmployeeAPIProject.Repositories
         {
             return _employeeDbContext.EmployeeSupervisor.ToList();
         }
+        public void AddSupervisor(SupervisorDTO supervisorDTO)
+        {
+            var employee = _employeeDbContext.Employees.Find(supervisorDTO.EmployeeId);
+            
+
+            var supervisor = new EmployeeSupervisor
+            {
+                EmployeeId = supervisorDTO.EmployeeId,
+                SupervisorType = supervisorDTO.SupervisorType
+            };
+
+            _employeeDbContext.EmployeeSupervisor.Add(supervisor);
+        }
 
         public void Dispose()
         {
             _employeeDbContext?.Dispose();
         }
 
-        
+       
     }
 }

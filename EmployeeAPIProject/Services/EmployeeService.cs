@@ -154,6 +154,7 @@ namespace EmployeeAPIProject.Services
                     ? statusChangeRequest.StatusChangeDate
                     : DateTime.Now;
 
+
                 // Store the reason and additional property
                 employee.StatusChangeReason = statusChangeRequest.StatusChangeReason;
                 employee.StatusId= statusChangeRequest.StatusId;
@@ -197,6 +198,12 @@ namespace EmployeeAPIProject.Services
         public IEnumerable<EmployeeSupervisor> GetSupervisors()
         {
              return _employeeRepository.GetSupervisors();
+        }
+
+        public void AddSupervisor(SupervisorDTO supervisorDTO)
+        {
+            supervisorDTO.SupervisorId = new Guid();
+            _employeeRepository.AddSupervisor(supervisorDTO);
         }
     }
 

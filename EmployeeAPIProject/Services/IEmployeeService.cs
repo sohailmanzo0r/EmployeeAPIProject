@@ -11,7 +11,7 @@ namespace EmployeeAPIProject.Services
           IEnumerable<EmployeeStatus> GetEmployeeStatus();
         IEnumerable<EmployeeSupervisor> GetSupervisors();
 
-
+        void AddSupervisor(SupervisorDTO supervisorDTO);
         void AddEmployee(Employee addedemployee);
          
         EmployeeDTO GetEmployee([FromRoute] Guid id);

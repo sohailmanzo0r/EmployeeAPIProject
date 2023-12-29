@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Controllers
 {
-  //  [Authorize]
+  [Authorize]
     [ApiController]
     [Route("api/employees")]
     public class EmployeeController : Controller
@@ -115,5 +115,18 @@ namespace EmployeeAPIProject.Controllers
 
             return Ok(_employeeService.GetSupervisors());
         }
+        [HttpPost("AddSupervisor")]
+        public  IActionResult AddSupervisor(SupervisorDTO supervisorDTO)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _employeeService.AddSupervisor(supervisorDTO);
+
+                return Ok(supervisorDTO);
+            }
+            return NotFound();
+        }
     }
+
 }

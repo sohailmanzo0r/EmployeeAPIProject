@@ -36,10 +36,11 @@ namespace EmployeeAPIProject.Data
                 .HasForeignKey(l => l.EmployeeId);
 
             modelBuilder.Entity<EmployeeSupervisor>()
-                .HasKey(es => new { es.SupervisorId, es.EmployeeId });
+           .HasKey(es => new { es.EmployeeId, es.SupervisorId });
+
             modelBuilder.Entity<EmployeeSupervisor>()
-                .HasOne(es => es.Employee)
-                .WithMany()
+                .HasOne<Employee>(es => es.Employee)
+                .WithMany(e => e.Supervisors)
                 .HasForeignKey(es => es.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
