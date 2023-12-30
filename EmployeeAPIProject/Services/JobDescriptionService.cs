@@ -11,6 +11,12 @@ namespace EmployeeAPIProject.Services
         {
              _jobDescription = jobDescription;
         }
+
+        public JobDescription GetJobDescription(Guid jobId)
+        {
+            return _jobDescription.GetJobDescription(jobId);
+        }
+
         public IEnumerable<JobDescription> GetJobDescriptions()
         {
           return  _jobDescription.GetJobDescriptions();

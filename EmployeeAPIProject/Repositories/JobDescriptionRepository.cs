@@ -15,6 +15,10 @@ namespace EmployeeAPIProject.Repositories
         {
             return _jobdescriptiondbcontext.JobDescription.ToList();
         }
+        public JobDescription GetJobDescription(Guid jobId)
+        {
+            return _jobdescriptiondbcontext.JobDescription.FirstOrDefault(e=>e.JobId == jobId);
+        }
         public void save()
         {
             _jobdescriptiondbcontext.SaveChanges();

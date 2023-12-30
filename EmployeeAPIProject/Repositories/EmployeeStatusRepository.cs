@@ -20,12 +20,15 @@ namespace EmployeeAPIProject.Repositories
         {
             _statusDbContext.SaveChanges();
         }
-
+        public EmployeeStatus GetEmployeeStatus(Guid id)
+        {
+            return _statusDbContext.EmployeeStatus.FirstOrDefault(e=>e.StatusId == id);
+        }
         public void Dispose()
         {
             _statusDbContext?.Dispose();
         }
 
-      
+       
     }
 }

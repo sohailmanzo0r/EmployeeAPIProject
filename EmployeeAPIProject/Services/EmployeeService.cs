@@ -13,16 +13,22 @@ namespace EmployeeAPIProject.Services
     public class EmployeeService : IEmployeeService
     {
         protected readonly IEmployee _employeeRepository;
-        private readonly IConfiguration _configuration;
+        private readonly IJobDescription _jobDescription;
+        private readonly IEmployeeStatus _employeeStatus;
 
-        public EmployeeService(IEmployee employeeRepository, IConfiguration configuration)
+        public EmployeeService(IEmployee employeeRepository, IConfiguration configuration,IJobDescription jobDescription,IEmployeeStatus employeeStatus)
         {
             _employeeRepository = employeeRepository;
-            _configuration = configuration;
+            _jobDescription = jobDescription;
+            _employeeStatus = employeeStatus;
         }
         public void AddEmployee(Employee addedemployee)
 
         {
+             var jobdescription = _jobDescription.GetJobDescription(addedemployee.JobId);
+            var status= _employeeStatus.GetEmployeeStatus(addedemployee.StatusId);
+            addedemployee.EmployeeStatus = status;
+            addedemployee.JobDescription = jobdescription;
             addedemployee.Id = new Guid();
             _employeeRepository.AddEmployee(addedemployee);
         }
@@ -116,83 +122,82 @@ namespace EmployeeAPIProject.Services
             return emp1;
         }
 
-        public Employee LoginUser(Login user)
-        {
-
-            var employee = _employeeRepository.LoginUser(user);
-            if (employee == null)
-            {
-                return null;
-            }
-            return employee;
-        }
-
         public void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest)
         {
 
             _employeeRepository.UpdateEmployee(id, EmployeeUpdateRequest);
         }
 
-        public void ChangeStatus(Guid id, Employee statusChangeRequest)
-        {
-            var employee = _employeeRepository.GetEmployee(id);
-            if (employee != null)
-            { 
-                employee.EmployeeStatus.StatusId = statusChangeRequest.EmployeeStatus.StatusId;
-                employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
-                employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
-                    ? statusChangeRequest.StatusChangeDate
-                    : DateTime.Now;
-                // Store the reason and additional property
-                employee.StatusChangeReason = statusChangeRequest.StatusChangeReason;
-                employee.StatusId= statusChangeRequest.StatusId;
-                _employeeRepository.save();
-            }
-        }
+        //public Employee LoginUser(Login user)
+        //{
 
-        public string GenerateJwtToken(Employee user)
-        {
-            var claims = new List<Claim>
-            {
-            new Claim(ClaimTypes.Name, user.Email),
-           
-             
-            // Add other claims as needed
-           };
+        //    var employee = _employeeRepository.LoginUser(user);
+        //    if (employee == null)
+        //    {
+        //        return null;
+        //    }
+        //    return employee;
+        //}
+        //public void ChangeStatus(Guid id, Employee statusChangeRequest)
+        //{
+        //    var employee = _employeeRepository.GetEmployee(id);
+        //    if (employee != null)
+        //    { 
+        //        employee.EmployeeStatus.StatusId = statusChangeRequest.EmployeeStatus.StatusId;
+        //        employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
+        //        employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
+        //            ? statusChangeRequest.StatusChangeDate
+        //            : DateTime.Now;
+        //        // Store the reason and additional property
+        //        employee.StatusChangeReason = statusChangeRequest.StatusChangeReason;
+        //        employee.StatusId= statusChangeRequest.StatusId;
+        //        _employeeRepository.save();
+        //    }
+        //}
+
+        //public string GenerateJwtToken(Employee user)
+        //{
+        //    var claims = new List<Claim>
+        //    {
+        //    new Claim(ClaimTypes.Name, user.Email),
 
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.UtcNow.AddHours(2),
-                signingCredentials: signIn);
+        //    // Add other claims as needed
+        //   };
 
-            return  new JwtSecurityTokenHandler().WriteToken(token);
-        }
 
-        public IEnumerable<JobDescription> GetJobDescriptions()
-        {
-            return _employeeRepository.GetJobDescriptions();
-        }
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        //    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        //    var token = new JwtSecurityToken(
+        //        _configuration["Jwt:Issuer"],
+        //        _configuration["Jwt:Audience"],
+        //        claims,
+        //        expires: DateTime.UtcNow.AddHours(2),
+        //        signingCredentials: signIn);
 
-        public IEnumerable<EmployeeStatus> GetEmployeeStatus()
-        {
-            return _employeeRepository.GetEmployeeStatus();
-        }
+        //    return  new JwtSecurityTokenHandler().WriteToken(token);
+        //}
 
-        public IEnumerable<EmployeeSupervisor> GetSupervisors()
-        {
-             return _employeeRepository.GetSupervisors();
-        }
+        //public IEnumerable<JobDescription> GetJobDescriptions()
+        //{
+        //    return _employeeRepository.GetJobDescriptions();
+        //}
 
-        public void AddSupervisor(SupervisorDTO supervisorDTO)
-        {
-            supervisorDTO.SupervisorId = new Guid();
-            _employeeRepository.AddSupervisor(supervisorDTO);
-        }
+        //public IEnumerable<EmployeeStatus> GetEmployeeStatus()
+        //{
+        //    return _employeeRepository.GetEmployeeStatus();
+        //}
+
+        //public IEnumerable<EmployeeSupervisor> GetSupervisors()
+        //{
+        //     return _employeeRepository.GetSupervisors();
+        //}
+
+        //public void AddSupervisor(SupervisorDTO supervisorDTO)
+        //{
+        //    supervisorDTO.SupervisorId = new Guid();
+        //    _employeeRepository.AddSupervisor(supervisorDTO);
+        //}
     }
 
 }

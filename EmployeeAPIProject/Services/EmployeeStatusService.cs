@@ -35,6 +35,10 @@ namespace EmployeeAPIProject.Services
         {
             return _employeeStatusService.GetEmployeeStatus();
         }
-      
+
+        public EmployeeStatus GetEmployeeStatus(Guid id)
+        {
+            return _employeeStatusService.GetEmployeeStatus(id);
+        }
     }
 }
