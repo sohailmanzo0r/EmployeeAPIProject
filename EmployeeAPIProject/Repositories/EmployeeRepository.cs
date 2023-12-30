@@ -61,46 +61,6 @@ namespace EmployeeAPIProject.Repositories
             }
         }
 
-        //public Employee LoginUser(Login user)
-        //{
-        //    var employee = _employeeDbContext.Employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
-
-        //    if (employee == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    return employee;
-
-        //}
-        //public IEnumerable<JobDescription> GetJobDescriptions()
-        //{
-        //    return _employeeDbContext.JobDescription.ToList();
-
-        //}
-
-        //public IEnumerable<EmployeeStatus> GetEmployeeStatus()
-        //{
-        //    return _employeeDbContext.EmployeeStatus.ToList();
-        //}
-        //public IEnumerable<EmployeeSupervisor> GetSupervisors()
-        //{
-        //    return _employeeDbContext.EmployeeSupervisor.ToList();
-        //}
-        //public void AddSupervisor(SupervisorDTO supervisorDTO)
-        //{
-        //    var employee = _employeeDbContext.Employees.Find(supervisorDTO.EmployeeId);
-
-
-        //    var supervisor = new EmployeeSupervisor
-        //    {
-        //        EmployeeId = supervisorDTO.EmployeeId,
-        //        SupervisorType = supervisorDTO.SupervisorType
-        //    };
-
-        //    _employeeDbContext.EmployeeSupervisor.Add(supervisor);
-        //}
-
         public void save()
         {
             _employeeDbContext.SaveChanges();
