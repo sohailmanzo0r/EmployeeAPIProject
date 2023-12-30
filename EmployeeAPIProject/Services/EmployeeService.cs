@@ -63,10 +63,6 @@ namespace EmployeeAPIProject.Services
         public IEnumerable<EmployeeDTO> GetAllEmployees()
         {
             var employees = _employeeRepository.GetAllEmployees();
-            if (employees == null)
-            {
-                return null;
-            }
             List<EmployeeDTO> employees1 = new List<EmployeeDTO>();
             foreach (Employee emp in employees)
             {
@@ -117,11 +113,6 @@ namespace EmployeeAPIProject.Services
             emp1.JobId = emp.JobId;
             emp1.StatusId = emp.StatusId;
 
-            if (emp1 == null)
-            {
-                return null;
-            }
-
             return emp1;
         }
 
@@ -146,15 +137,12 @@ namespace EmployeeAPIProject.Services
         {
             var employee = _employeeRepository.GetEmployee(id);
             if (employee != null)
-            {
-
+            { 
                 employee.EmployeeStatus.StatusId = statusChangeRequest.EmployeeStatus.StatusId;
                 employee.StatusChangeChoice = statusChangeRequest.StatusChangeChoice;
                 employee.StatusChangeDate = statusChangeRequest.StatusChangeChoice.ToLower() == "later"
                     ? statusChangeRequest.StatusChangeDate
                     : DateTime.Now;
-
-
                 // Store the reason and additional property
                 employee.StatusChangeReason = statusChangeRequest.StatusChangeReason;
                 employee.StatusId= statusChangeRequest.StatusId;

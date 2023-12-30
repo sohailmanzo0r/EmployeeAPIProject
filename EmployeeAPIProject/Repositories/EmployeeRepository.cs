@@ -44,11 +44,6 @@ namespace EmployeeAPIProject.Repositories
             var employees = _employeeDbContext.Employees
                                .Include(e => e.JobDescription)
                                  .Include(e => e.EmployeeStatus).ToList();
-
-            if (employees == null)
-            {
-                return null;
-            }
             return employees;
         }
 

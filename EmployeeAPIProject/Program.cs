@@ -65,9 +65,16 @@ builder.Services.AddDbContext<EmployeeDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeAPIDB"));
      
 });
- 
+builder.Services.AddScoped<ILoginLogsService, LoginLogsService>();
+builder.Services.AddScoped<IJobDescriptionService, JobDescriptionService>();
+builder.Services.AddScoped<IEmployeeSupervisorService, EmployeeSupervisorService>();
+builder.Services.AddScoped<IEmployeeStatusService, EmployeeStatusService>();
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped<IEmployee, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeStatus, EmployeeStatusRepository>();
+builder.Services.AddScoped<IEmployeeSupervisor, EmployeeSupervisorRepository>();
+builder.Services.AddScoped<IJobDescription, JobDescriptionRepository>();
+builder.Services.AddScoped<ILoginLogs, LoginLogsRepository>();
 builder.Services.AddScoped<DbContext, EmployeeDbContext>();
 //builder.Services.AddHostedService<StatusChangeBackgroundService>();
 

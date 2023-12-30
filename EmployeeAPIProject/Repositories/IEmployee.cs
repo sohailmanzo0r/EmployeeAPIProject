@@ -11,16 +11,10 @@ namespace EmployeeAPIProject.Repositories
           IEnumerable<JobDescription> GetJobDescriptions();
           IEnumerable<EmployeeStatus> GetEmployeeStatus();
           IEnumerable<EmployeeSupervisor> GetSupervisors();
-        //add new employee
-        void AddEmployee(Employee addedemployee);
-        //get employee by id
-          Employee GetEmployee([FromRoute] Guid id);
-
         void AddSupervisor(SupervisorDTO supervisorDTO);
-
-        //update employee by id
+        void AddEmployee(Employee addedemployee);
+          Employee GetEmployee([FromRoute] Guid id);
         void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest);
-        //Delete employee by id
           void deleteEmployee(Guid id);
         //login user method
          Employee LoginUser(Login user);

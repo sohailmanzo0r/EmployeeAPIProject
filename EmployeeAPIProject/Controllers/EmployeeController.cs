@@ -15,11 +15,13 @@ namespace EmployeeAPIProject.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
+       
 
         public EmployeeController(IEmployeeService employeeService)
         {
              
              _employeeService = employeeService;
+             
         }
        
         [HttpGet]
@@ -72,61 +74,55 @@ namespace EmployeeAPIProject.Controllers
             _employeeService.deleteEmployee(id);
             return Ok();
         }
-        [AllowAnonymous]
-        [HttpPost("LoginUser")]
-        public IActionResult LoginUser(Login user)
-        {
-            var loggedInUser = _employeeService.LoginUser(user);
-            if (loggedInUser != null) { 
-                var token = _employeeService.GenerateJwtToken(loggedInUser);
-            return Ok(new { Token = token });
-        }
-            return Unauthorized();
+        //[AllowAnonymous]
+        //[HttpPost("LoginUser")]
+        //public IActionResult LoginUser(Login user)
+        //{
+        //    var loggedInUser = _employeeService.LoginUser(user);
+        //    if (loggedInUser != null) { 
+        //        var token = _employeeService.GenerateJwtToken(loggedInUser);
+        //    return Ok(new { Token = token });
+        //}
+        //    return Unauthorized();
             
-        }
-        [HttpPut]
-        [Route("changeStatus/{id:Guid}")]
-        public IActionResult ChangeStatus([FromRoute] Guid id, Employee statusChangeRequest)
-        {
-            _employeeService.ChangeStatus(id, statusChangeRequest);
-            return Ok();
-        }
+        //}
+        
 
         private string calculateAge(string dob)
 
         {
            return _employeeService.calculateAge(dob);
         }
-        [HttpGet("GetJobDescription")]
-        public IActionResult GetJobDescriptions()
-        {
+        //[HttpGet("GetJobDescription")]
+        //public IActionResult GetJobDescriptions()
+        //{
 
-            return Ok(_employeeService.GetJobDescriptions());
-        }
-        [HttpGet("GetEmployeeStatus")]
-        public IActionResult GetEmployeeStatus()
-        {
+        //    return Ok(_employeeService.GetJobDescriptions());
+        //}
+        //[HttpGet("GetEmployeeStatus")]
+        //public IActionResult GetEmployeeStatus()
+        //{
 
-            return Ok(_employeeService.GetEmployeeStatus());
-        }
-        [HttpGet("GetSupervisors")]
-        public IActionResult GetSupervisors()
-        {
+        //    return Ok(_employeeService.GetEmployeeStatus());
+        //}
+        //[HttpGet("GetSupervisors")]
+        //public IActionResult GetSupervisors()
+        //{
 
-            return Ok(_employeeService.GetSupervisors());
-        }
-        [HttpPost("AddSupervisor")]
-        public  IActionResult AddSupervisor(SupervisorDTO supervisorDTO)
-        {
+        //    return Ok(_employeeService.GetSupervisors());
+        //}
+        //[HttpPost("AddSupervisor")]
+        //public  IActionResult AddSupervisor(SupervisorDTO supervisorDTO)
+        //{
 
-            if (ModelState.IsValid)
-            {
-                _employeeService.AddSupervisor(supervisorDTO);
+        //    if (ModelState.IsValid)
+        //    {
+        //        _employeeService.AddSupervisor(supervisorDTO);
 
-                return Ok(supervisorDTO);
-            }
-            return NotFound();
-        }
+        //        return Ok(supervisorDTO);
+        //    }
+        //    return NotFound();
+        //}
     }
 
 }
