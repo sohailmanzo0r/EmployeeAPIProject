@@ -1,4 +1,6 @@
 ﻿using EmployeeAPIProject.Data;
+using EmployeeAPIProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Services
 {
@@ -20,19 +22,23 @@ namespace EmployeeAPIProject.Services
 
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<EmployeeDbContext>();
-                    var employees = dbContext.Employees
-                        .Where(e => e.StatusChangeDate.HasValue && e.StatusChangeDate <= DateTime.Now)
-                        .ToList();
-
-                    foreach (var employee in employees)
+                    var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
+                    var employees = dbContext.Set<Employee>()
+              .Where(e => e.StatusChangeDate.HasValue && e.StatusChangeDate <= DateTime.Now)
+                    .ToList();
+                    if (employees != null)
                     {
-                        var emp = dbContext.EmployeeStatus.FirstOrDefault(e => e.StatusName == employee.LaterStatus);
-                        employee.EmployeeStatus.StatusId =   emp.StatusId; // Change status as needed
-                        // Reset the status change date
-                        // Handle other status change actions
+                        foreach (var employee in employees)
+                        {
 
-                        dbContext.SaveChanges();
+                            var emp = dbContext.Set<EmployeeStatus>().FirstOrDefault(e => e.StatusName == employee.LaterStatus);
+                            if (emp != null)
+                            {
+                                employee.StatusId = emp.StatusId; // Change status as needed
+                                employee.StatusChangeDate = null;                                          // Reset the status change date                                             // Handle other status change actio
+                                dbContext.SaveChanges();
+                            }
+                        }
                     }
                 }
             }

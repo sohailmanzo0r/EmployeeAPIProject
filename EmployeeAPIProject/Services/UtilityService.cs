@@ -2,15 +2,11 @@
 {
     public class UtilityService : IUtilityService
     {
-        public string calculateAge(string dob)
+        public string calculateAge(DateTime dob)
         {
-            DateTime dateOfBirth;
+            DateTime dateOfBirth=dob;
 
-            bool check = DateTime.TryParse(dob, out dateOfBirth);
-            if (check == false)
-            {
-                return "invalid date of birth";
-            }
+          
             DateTime currentDate = DateTime.Now;
 
             TimeSpan difference = currentDate.Subtract(dateOfBirth);

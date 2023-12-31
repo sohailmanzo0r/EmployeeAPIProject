@@ -2,6 +2,6 @@
 {
     public interface IUtilityService
     {
-        string calculateAge(string dob);
+        string calculateAge(DateTime dob);
     }
 }

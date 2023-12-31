@@ -75,7 +75,7 @@ namespace EmployeeAPIProject.Controllers
             return Ok();
         }
 
-        private string calculateAge(string dob)
+        private string calculateAge(DateTime dob)
 
         {
            return _utilityService.calculateAge(dob);

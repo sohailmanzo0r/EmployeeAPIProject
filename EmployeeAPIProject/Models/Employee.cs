@@ -11,7 +11,7 @@ namespace EmployeeAPIProject.Models
         public long Salary { get; set; }
         public string Department { get; set; }
         public string Password { get; set; }
-       public string DOB { get; set; }
+       public DateTime DOB { get; set; }
         public Status? LaterStatus { get; set; }
         public string? StatusChangeChoice { get; set; }
         public DateTime? StatusChangeDate { get; set; }
@@ -37,7 +37,7 @@ namespace EmployeeAPIProject.Models
         public long Salary { get; set; }
         public string Department { get; set; }
         public string Password { get; set; }
-        public string DOB { get; set; }
+        public DateTime DOB { get; set; }
         public Status? LaterStatus { get; set; }
         public string? StatusChangeChoice { get; set; }
         public DateTime? StatusChangeDate { get; set; }
