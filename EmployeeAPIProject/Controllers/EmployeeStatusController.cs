@@ -17,16 +17,16 @@ namespace EmployeeAPIProject.Controllers
         }
 
         [HttpPut]
-        [Route("changeStatus/{id:Guid}")]
-        public IActionResult ChangeStatus([FromRoute] Guid id, Employee statusChangeRequest)
+        [Route("{id:Guid}")]
+        public IActionResult Change([FromRoute]Guid id, Employee statusChangeRequest)
         {
-            _employeeStatusService.ChangeStatus(id, statusChangeRequest);
+            _employeeStatusService.Change(id, statusChangeRequest);
             return Ok();
         }
-        [HttpGet("GetEmployeeStatus")]
-        public IActionResult GetEmployeeStatus()
+        [HttpGet]
+        public IActionResult Get()
         {
-            return Ok(_employeeStatusService.GetEmployeeStatus());
+            return Ok(_employeeStatusService.Get());
         }
     }
 }

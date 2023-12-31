@@ -4,8 +4,8 @@ namespace EmployeeAPIProject.Services
 {
     public interface IEmployeeSupervisorService
     {
-        IEnumerable<EmployeeSupervisor> GetSupervisors();
-        void AddSupervisor(EmployeeSupervisor supervisor);
+        IEnumerable<EmployeeSupervisor> Get();
+        void Add(EmployeeSupervisor supervisor);
         
         
     }

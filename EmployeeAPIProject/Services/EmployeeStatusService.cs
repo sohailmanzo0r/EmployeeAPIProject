@@ -5,17 +5,17 @@ namespace EmployeeAPIProject.Services
 {
     public class EmployeeStatusService : IEmployeeStatusService
     {
-        private readonly IEmployeeStatus _employeeStatusService;
+        private readonly IEmployeeStatus _employeeStatusRepository;
         private readonly IEmployee _employeeRepository;
-        public EmployeeStatusService(IEmployeeStatus employeeStatusService,IEmployee employeeRepository)
+        public EmployeeStatusService(IEmployeeStatus employeeStatusRepository,IEmployee employeeRepository)
         {
-            _employeeStatusService = employeeStatusService;
+            _employeeStatusRepository = employeeStatusRepository;
             _employeeRepository = employeeRepository;
         }
 
-        public void ChangeStatus(Guid id, Employee statusChangeRequest)
+        public void Change(Guid id, Employee statusChangeRequest)
         {
-            var employee = _employeeRepository.GetEmployee(id);
+            var employee = _employeeRepository.Get(id);
             if (employee != null)
             {
                 employee.EmployeeStatus.StatusId = statusChangeRequest.EmployeeStatus.StatusId;
@@ -31,14 +31,14 @@ namespace EmployeeAPIProject.Services
 
         }
 
-        public IEnumerable<EmployeeStatus> GetEmployeeStatus()
+        public IEnumerable<EmployeeStatus> Get()
         {
-            return _employeeStatusService.GetEmployeeStatus();
+            return _employeeStatusRepository.Get();
         }
 
-        public EmployeeStatus GetEmployeeStatus(Guid id)
+        public EmployeeStatus Get(Guid id)
         {
-            return _employeeStatusService.GetEmployeeStatus(id);
+            return _employeeStatusRepository.Get(id);
         }
     }
 }

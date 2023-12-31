@@ -15,28 +15,28 @@ namespace EmployeeAPIProject.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
-       
+        private readonly IUtilityService _utilityService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, IUtilityService utilityService)
         {
              
              _employeeService = employeeService;
-             
+           _utilityService = utilityService;
         }
        
         [HttpGet]
-        public   IActionResult GetAllEmployees()
+        public   IActionResult Get()
         {
 
-            return Ok(_employeeService.GetAllEmployees());
+            return Ok(_employeeService.Get());
         }
         [HttpPost]
-        public   IActionResult AddEmployee( Employee addedemployee)
+        public   IActionResult Add( Employee addedemployee)
         {
 
             if (ModelState.IsValid)
             {
-                _employeeService.AddEmployee(addedemployee);
+                _employeeService.Add(addedemployee);
               
                 return Ok(addedemployee);
             }
@@ -46,20 +46,20 @@ namespace EmployeeAPIProject.Controllers
        
         [HttpGet]
         [Route("{id:Guid}")]
-        public IActionResult GetEmployee([FromRoute] Guid id)
+        public IActionResult Get([FromRoute] Guid id)
         {
-             return Ok(_employeeService.GetEmployee(id));
+             return Ok(_employeeService.Get(id));
 
 
         }
         [HttpPut]
         [Route("{id:Guid}")]
-        public  IActionResult UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest)
+        public  IActionResult Update([FromRoute] Guid id, Employee EmployeeUpdateRequest)
         {
             if (ModelState.IsValid)
             {
 
-                _employeeService.UpdateEmployee(id, EmployeeUpdateRequest);
+                _employeeService.Update(id, EmployeeUpdateRequest);
                  
                 return Ok(EmployeeUpdateRequest);
             }
@@ -69,60 +69,18 @@ namespace EmployeeAPIProject.Controllers
         }
         [HttpDelete]
         [Route("{id:Guid}")]
-        public  IActionResult deleteEmployee([FromRoute] Guid id)
+        public  IActionResult delete([FromRoute] Guid id)
         {   
-            _employeeService.deleteEmployee(id);
+            _employeeService.delete(id);
             return Ok();
         }
-        //[AllowAnonymous]
-        //[HttpPost("LoginUser")]
-        //public IActionResult LoginUser(Login user)
-        //{
-        //    var loggedInUser = _employeeService.LoginUser(user);
-        //    if (loggedInUser != null) { 
-        //        var token = _employeeService.GenerateJwtToken(loggedInUser);
-        //    return Ok(new { Token = token });
-        //}
-        //    return Unauthorized();
-            
-        //}
-        
 
         private string calculateAge(string dob)
 
         {
-           return _employeeService.calculateAge(dob);
+           return _utilityService.calculateAge(dob);
         }
-        //[HttpGet("GetJobDescription")]
-        //public IActionResult GetJobDescriptions()
-        //{
-
-        //    return Ok(_employeeService.GetJobDescriptions());
-        //}
-        //[HttpGet("GetEmployeeStatus")]
-        //public IActionResult GetEmployeeStatus()
-        //{
-
-        //    return Ok(_employeeService.GetEmployeeStatus());
-        //}
-        //[HttpGet("GetSupervisors")]
-        //public IActionResult GetSupervisors()
-        //{
-
-        //    return Ok(_employeeService.GetSupervisors());
-        //}
-        //[HttpPost("AddSupervisor")]
-        //public  IActionResult AddSupervisor(SupervisorDTO supervisorDTO)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        _employeeService.AddSupervisor(supervisorDTO);
-
-        //        return Ok(supervisorDTO);
-        //    }
-        //    return NotFound();
-        //}
+         
     }
 
 }

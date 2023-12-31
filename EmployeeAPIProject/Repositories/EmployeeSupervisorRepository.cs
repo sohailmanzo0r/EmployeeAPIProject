@@ -6,13 +6,14 @@ namespace EmployeeAPIProject.Repositories
 {
     public class EmployeeSupervisorRepository : IEmployeeSupervisor,IDisposable
     {
-        private readonly EmployeeDbContext _employeesupervisordbcontext;
+        private readonly DbContext _context;
 
-        public EmployeeSupervisorRepository(EmployeeDbContext employeesupervisordbcontext)
+        public EmployeeSupervisorRepository(DbContext context)
         {
-           _employeesupervisordbcontext = employeesupervisordbcontext;
+            _context = context;
         }
-        public void AddSupervisor(EmployeeSupervisor supervisor)
+
+        public void Add(EmployeeSupervisor supervisor)
         {
             var supervisor1 = new EmployeeSupervisor
             {
@@ -20,21 +21,21 @@ namespace EmployeeAPIProject.Repositories
                 SupervisorType = supervisor.SupervisorType
             };
 
-            _employeesupervisordbcontext.EmployeeSupervisor.Add(supervisor1);
-            _employeesupervisordbcontext.SaveChanges();
+            _context.Set<EmployeeSupervisor>().Add(supervisor1);
+            save();
         }
 
-        public IEnumerable<EmployeeSupervisor> GetSupervisors()
+        public IEnumerable<EmployeeSupervisor> Get()
         {
-            return _employeesupervisordbcontext.EmployeeSupervisor.ToList();
+            return _context.Set<EmployeeSupervisor>().ToList();
         }
-        public void save()
+        private void save()
         {
-            _employeesupervisordbcontext.SaveChanges();
+            _context.SaveChanges();
         }
         public void Dispose()
         {
-            _employeesupervisordbcontext?.Dispose();
+            _context?.Dispose();
         }
 
        

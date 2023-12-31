@@ -4,8 +4,8 @@ namespace EmployeeAPIProject.Repositories
 {
     public interface IEmployeeStatus
     {
-        IEnumerable<EmployeeStatus> GetEmployeeStatus();
-        EmployeeStatus GetEmployeeStatus(Guid id);
-        void save();
+        IEnumerable<EmployeeStatus> Get ();
+        EmployeeStatus Get(Guid id);
+        
     }
 }

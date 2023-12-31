@@ -16,11 +16,11 @@ namespace EmployeeAPIProject.Controllers
         {
            _jobDescriptionService = jobDescriptionService;
         }
-        [HttpGet("GetJobDescription")]
-        public IActionResult GetJobDescriptions()
+        [HttpGet]
+        public IActionResult Get()
         {
 
-            return Ok(_jobDescriptionService.GetJobDescriptions());
+            return Ok(_jobDescriptionService.Get());
         }
     }
 }

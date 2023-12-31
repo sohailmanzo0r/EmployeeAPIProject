@@ -1,34 +1,36 @@
 ﻿using EmployeeAPIProject.Data;
 using EmployeeAPIProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Repositories
 {
     public class EmployeeStatusRepository : IEmployeeStatus,IDisposable
     {
-        private readonly EmployeeDbContext _statusDbContext;
+        private readonly DbContext _context;
 
-        public EmployeeStatusRepository(EmployeeDbContext statusDbContext) {
-            _statusDbContext = statusDbContext;
+        public EmployeeStatusRepository (DbContext context)
+        {
+            _context = context;
         }
 
+        public IEnumerable<EmployeeStatus> Get()
+        {
+            return _context.Set<EmployeeStatus>().ToList();
+        }
 
-        public IEnumerable<EmployeeStatus> GetEmployeeStatus()
+        public EmployeeStatus Get(Guid id)
         {
-            return _statusDbContext.EmployeeStatus.ToList();
+            return _context.Set<EmployeeStatus>().FirstOrDefault(e => e.StatusId == id);
         }
-        public void save()
-        {
-            _statusDbContext.SaveChanges();
-        }
-        public EmployeeStatus GetEmployeeStatus(Guid id)
-        {
-            return _statusDbContext.EmployeeStatus.FirstOrDefault(e=>e.StatusId == id);
-        }
+
         public void Dispose()
         {
-            _statusDbContext?.Dispose();
+            _context?.Dispose();
         }
 
-       
+        private void save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

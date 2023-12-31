@@ -16,19 +16,19 @@ namespace EmployeeAPIProject.Controllers
         {
             _employeeSupervisorService = employeeSupervisorService;
         }
-        [HttpGet("GetSupervisors")]
-        public IActionResult GetSupervisors()
+        [HttpGet]
+        public IActionResult Get()
         {
 
-            return Ok(_employeeSupervisorService.GetSupervisors());
+            return Ok(_employeeSupervisorService.Get());
         }
-        [HttpPost("AddSupervisor")]
-        public IActionResult AddSupervisor(EmployeeSupervisor supervisor)
+        [HttpPost]
+        public IActionResult Add(EmployeeSupervisor supervisor)
         {
 
             if (ModelState.IsValid)
             {
-                _employeeSupervisorService.AddSupervisor(supervisor);
+                _employeeSupervisorService.Add(supervisor);
 
                 return Ok(supervisor);
             }

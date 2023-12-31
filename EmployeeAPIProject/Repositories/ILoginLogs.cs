@@ -5,6 +5,6 @@ namespace EmployeeAPIProject.Repositories
     public interface ILoginLogs
     {
         Employee LoginUser(Login user);
-        void save();
+        
     }
 }

@@ -61,10 +61,10 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityRequirement(securityRequirement);
 });
-builder.Services.AddDbContext<EmployeeDbContext>(options => {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeAPIDB"));
-     
-});
+
+builder.Services.AddDbContext<DbContext, EmployeeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeAPIDB")));
+
 builder.Services.AddScoped<ILoginLogsService, LoginLogsService>();
 builder.Services.AddScoped<IJobDescriptionService, JobDescriptionService>();
 builder.Services.AddScoped<IEmployeeSupervisorService, EmployeeSupervisorService>();
@@ -75,8 +75,10 @@ builder.Services.AddScoped<IEmployeeStatus, EmployeeStatusRepository>();
 builder.Services.AddScoped<IEmployeeSupervisor, EmployeeSupervisorRepository>();
 builder.Services.AddScoped<IJobDescription, JobDescriptionRepository>();
 builder.Services.AddScoped<ILoginLogs, LoginLogsRepository>();
+builder.Services.AddScoped<IUtilityService, UtilityService>();
 builder.Services.AddScoped<DbContext, EmployeeDbContext>();
-//builder.Services.AddHostedService<StatusChangeBackgroundService>();
+
+builder.Services.AddHostedService<StatusChangeBackgroundService>();
 
 
 //builder.Services.AddTransient<EmployeeDbContext>();

@@ -15,60 +15,34 @@ namespace EmployeeAPIProject.Services
         protected readonly IEmployee _employeeRepository;
         private readonly IJobDescription _jobDescription;
         private readonly IEmployeeStatus _employeeStatus;
+        private readonly IUtilityService _utilityService;
 
-        public EmployeeService(IEmployee employeeRepository, IConfiguration configuration,IJobDescription jobDescription,IEmployeeStatus employeeStatus)
+        public EmployeeService(IEmployee employeeRepository, IConfiguration configuration,IJobDescription jobDescription,IEmployeeStatus employeeStatus, IUtilityService utilityService)
         {
             _employeeRepository = employeeRepository;
             _jobDescription = jobDescription;
             _employeeStatus = employeeStatus;
+            _utilityService = utilityService;
         }
-        public void AddEmployee(Employee addedemployee)
+        public void Add(Employee addedemployee)
 
         {
-             var jobdescription = _jobDescription.GetJobDescription(addedemployee.JobId);
-            var status= _employeeStatus.GetEmployeeStatus(addedemployee.StatusId);
+             var jobdescription = _jobDescription.Get(addedemployee.JobId);
+            var status= _employeeStatus.Get(addedemployee.StatusId);
             addedemployee.EmployeeStatus = status;
             addedemployee.JobDescription = jobdescription;
             addedemployee.Id = new Guid();
-            _employeeRepository.AddEmployee(addedemployee);
+            _employeeRepository.Add(addedemployee);
         }
 
-        public string calculateAge(string dob)
+        public void delete(Guid id)
         {
-            DateTime dateOfBirth;
-
-            bool check = DateTime.TryParse(dob, out dateOfBirth);
-            if (check == false)
-            {
-                return "invalid date of birth";
-            }
-            DateTime currentDate = DateTime.Now;
-
-            TimeSpan difference = currentDate.Subtract(dateOfBirth);
-
-            // This is to convert the timespan to datetime object
-            DateTime age = DateTime.MinValue + difference;
-
-            // Min value is 01/01/0001
-            // Actual age is say 24 yrs, 9 months and 3 days represented as timespan
-            // Min Valye + actual age = 25 yrs , 10 months and 4 days.
-            // subtract our addition or 1 on all components to get the actual date.
-
-            int ageInYears = age.Year - 1;
-            int ageInMonths = age.Month - 1;
-            int ageInDays = age.Day - 1;
-
-            return " Year " + ageInYears + ",Months " + ageInMonths + " ,Days " + ageInDays;
+            _employeeRepository.delete(id);
         }
 
-        public void deleteEmployee(Guid id)
+        public IEnumerable<EmployeeDTO> Get()
         {
-            _employeeRepository.deleteEmployee(id);
-        }
-
-        public IEnumerable<EmployeeDTO> GetAllEmployees()
-        {
-            var employees = _employeeRepository.GetAllEmployees();
+            var employees = _employeeRepository.Get();
             List<EmployeeDTO> employees1 = new List<EmployeeDTO>();
             foreach (Employee emp in employees)
             {
@@ -90,16 +64,16 @@ namespace EmployeeAPIProject.Services
                 employeeDTO.StatusChangeDate = emp.StatusChangeDate;
                 employeeDTO.StatusChangeReason = emp.StatusChangeReason;
                 employeeDTO.StatusChangeChoice = emp.StatusChangeChoice;
-                employeeDTO.Age = calculateAge(emp.DOB);
+                employeeDTO.Age = _utilityService.calculateAge(emp.DOB);
                 employees1.Add(employeeDTO);
 
             }
             return employees1;
         }
 
-        public EmployeeDTO GetEmployee(Guid id)
+        public EmployeeDTO Get(Guid id)
         {
-            var emp = _employeeRepository.GetEmployee(id);
+            var emp = _employeeRepository.Get(id);
             EmployeeDTO emp1 = new EmployeeDTO();
             emp1.Id = emp.Id;
             emp1.Name = emp.Name;
@@ -114,7 +88,7 @@ namespace EmployeeAPIProject.Services
             emp1.StatusChangeDate = emp.StatusChangeDate;
             emp1.StatusChangeReason = emp.StatusChangeReason;
             emp1.StatusChangeChoice = emp.StatusChangeChoice;
-            emp1.Age = calculateAge(emp.DOB);
+            emp1.Age = _utilityService.calculateAge(emp.DOB);
             emp1.JobDescription = emp.JobDescription;
             emp1.JobId = emp.JobId;
             emp1.StatusId = emp.StatusId;
@@ -122,10 +96,10 @@ namespace EmployeeAPIProject.Services
             return emp1;
         }
 
-        public void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest)
+        public void Update([FromRoute] Guid id, Employee EmployeeUpdateRequest)
         {
 
-            _employeeRepository.UpdateEmployee(id, EmployeeUpdateRequest);
+            _employeeRepository.Update(id, EmployeeUpdateRequest);
         }
     }
 

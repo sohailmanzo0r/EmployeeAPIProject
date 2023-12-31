@@ -1,27 +1,26 @@
 ﻿using EmployeeAPIProject.Data;
 using EmployeeAPIProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Repositories
 {
     public class LoginLogsRepository : ILoginLogs, IDisposable
     {
-        private readonly EmployeeDbContext _loginlogdbcontext;
+        private readonly DbContext _context;
 
-        public LoginLogsRepository(EmployeeDbContext loginlogdbcontext)
+        public LoginLogsRepository(DbContext context)
         {
-            _loginlogdbcontext = loginlogdbcontext;
+            _context = context;
         }
+
         public Employee LoginUser(Login user)
         {
-            return _loginlogdbcontext.Employees.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
-        }
-        public void save()
-        {
-            _loginlogdbcontext.SaveChanges();
+            return _context.Set<Employee>()
+                           .FirstOrDefault(u => u.Email == user.Email && u.Password == user.Pwd);
         }
         public void Dispose()
         {
-            _loginlogdbcontext?.Dispose();
+            _context?.Dispose();
         }
 
       

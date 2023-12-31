@@ -11,16 +11,16 @@ namespace EmployeeAPIProject.Services
         {
             _employeeSupervisor = employeeSupervisor;
         }
-        public void AddSupervisor(EmployeeSupervisor supervisor)
+        public void Add(EmployeeSupervisor supervisor)
         {
             supervisor.SupervisorId = new Guid();
-            _employeeSupervisor.AddSupervisor(supervisor);
-            _employeeSupervisor.save();
+            _employeeSupervisor.Add(supervisor);
+            
         }
 
-        public IEnumerable<EmployeeSupervisor> GetSupervisors()
+        public IEnumerable<EmployeeSupervisor> Get()
         {
-            return _employeeSupervisor.GetSupervisors();
+            return _employeeSupervisor.Get();
         }
     }
 }

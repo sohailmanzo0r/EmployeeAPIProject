@@ -12,14 +12,14 @@ namespace EmployeeAPIProject.Services
              _jobDescription = jobDescription;
         }
 
-        public JobDescription GetJobDescription(Guid jobId)
+        public JobDescription Get(Guid jobId)
         {
-            return _jobDescription.GetJobDescription(jobId);
+            return _jobDescription.Get(jobId);
         }
 
-        public IEnumerable<JobDescription> GetJobDescriptions()
+        public IEnumerable<JobDescription> Get()
         {
-          return  _jobDescription.GetJobDescriptions();
+          return  _jobDescription.Get();
         }
     }
 }

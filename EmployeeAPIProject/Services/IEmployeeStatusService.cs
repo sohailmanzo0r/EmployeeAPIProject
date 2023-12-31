@@ -4,9 +4,9 @@ namespace EmployeeAPIProject.Services
 {
     public interface IEmployeeStatusService
     {
-        IEnumerable<EmployeeStatus> GetEmployeeStatus();
-        EmployeeStatus GetEmployeeStatus(Guid id);
-        void ChangeStatus(Guid id, Employee statusChangeRequest);
+        IEnumerable<EmployeeStatus> Get();
+        EmployeeStatus Get(Guid id);
+        void Change(Guid id, Employee statusChangeRequest);
        
     }
 }

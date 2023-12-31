@@ -5,11 +5,11 @@ namespace EmployeeAPIProject.Services
 {
     public interface IEmployeeService
     {
-         IEnumerable<EmployeeDTO> GetAllEmployees();
-        void AddEmployee(Employee addedemployee);
-        EmployeeDTO GetEmployee([FromRoute] Guid id);
-        void UpdateEmployee([FromRoute] Guid id, Employee EmployeeUpdateRequest);
-        void deleteEmployee(Guid id);
-        string calculateAge(string dob);
+         IEnumerable<EmployeeDTO> Get();
+        void Add(Employee addedemployee);
+        EmployeeDTO Get([FromRoute] Guid id);
+        void Update([FromRoute] Guid id, Employee EmployeeUpdateRequest);
+        void delete(Guid id);
+      
     }
 }

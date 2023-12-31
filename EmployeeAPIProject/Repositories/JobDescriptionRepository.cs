@@ -1,31 +1,36 @@
 ﻿using EmployeeAPIProject.Data;
 using EmployeeAPIProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Repositories
 {
     public class JobDescriptionRepository : IJobDescription, IDisposable
     {
-        private readonly EmployeeDbContext _jobdescriptiondbcontext;
+        private readonly DbContext _context;
 
-        public JobDescriptionRepository(EmployeeDbContext jobdescriptiondbcontext)
+        public JobDescriptionRepository(DbContext context)
         {
-             _jobdescriptiondbcontext = jobdescriptiondbcontext;
+            _context = context;
         }
-        public IEnumerable<JobDescription> GetJobDescriptions()
+
+        public IEnumerable<JobDescription> Get()
         {
-            return _jobdescriptiondbcontext.JobDescription.ToList();
+            return _context.Set<JobDescription>().ToList();
         }
-        public JobDescription GetJobDescription(Guid jobId)
+
+        public JobDescription Get(Guid jobId)
         {
-            return _jobdescriptiondbcontext.JobDescription.FirstOrDefault(e=>e.JobId == jobId);
+            return _context.Set<JobDescription>().FirstOrDefault(e => e.JobId == jobId);
         }
-        public void save()
+
+
+        private void save()
         {
-            _jobdescriptiondbcontext.SaveChanges();
+            _context.SaveChanges();
         }
         public void Dispose()
         {
-            _jobdescriptiondbcontext?.Dispose();
+            _context?.Dispose();
         }
 
        
