@@ -6,6 +6,5 @@ namespace EmployeeAPIProject.Repositories
     {
         IEnumerable<EmployeeStatus> Get ();
         EmployeeStatus Get(Guid id);
-        
     }
 }

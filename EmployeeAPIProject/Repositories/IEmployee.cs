@@ -8,13 +8,13 @@ namespace EmployeeAPIProject.Repositories
     {
      
           IEnumerable<Employee> Get();
-        
-        void Add(Employee addedemployee);
-          Employee Get([FromRoute] Guid id);
-        void Update([FromRoute] Guid id, Employee EmployeeUpdateRequest);
-          void delete(Guid id);
 
-        void save();
+        public bool Add(Employee addedEmployee);
+          Employee Get([FromRoute] Guid id);
+        public bool Update(Guid id, Employee employeeUpdateRequest);
+        public bool Delete(Guid id);
+
+        public bool save(); // Purpose of save method in interface is because it is using in status change method in status service
 
 
 

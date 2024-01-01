@@ -16,10 +16,17 @@ namespace EmployeeAPIProject.Repositories
             _context = context;
         }
 
-        public void Add(Employee addedemployee)
+        public bool Add(Employee addedEmployee)
         {
-            _context.Set<Employee>().Add(addedemployee);
-            save();
+            try
+            {
+                _context.Set<Employee>().Add(addedEmployee);
+                return save(); 
+            }
+            catch (Exception)
+            {       
+                return false;
+            }
         }
 
         public IEnumerable<Employee> Get()
@@ -36,16 +43,18 @@ namespace EmployeeAPIProject.Repositories
                            .Include(e => e.EmployeeStatus)
                            .FirstOrDefault(em => em.Id == id);
         }
-        public void delete(Guid id)
+        public bool Delete(Guid id)
         {
             var employee = _context.Set<Employee>().Find(id);
             if (employee != null)
             {
                 _context.Set<Employee>().Remove(employee);
-                save();
+                return save();  
             }
+            return false;
         }
-        public void Update(Guid id, Employee employeeUpdateRequest)
+
+        public bool Update(Guid id, Employee employeeUpdateRequest)
         {
             var existingEmployee = _context.Set<Employee>()
                                            .Include(e => e.JobDescription)
@@ -55,18 +64,25 @@ namespace EmployeeAPIProject.Repositories
             if (existingEmployee != null)
             {
                 _context.Entry(existingEmployee).CurrentValues.SetValues(employeeUpdateRequest);
-                save();
+                return save();  
             }
-            else
-            {
-                throw new Exception("Employee does not exist you are trying to update");
-            }
+            return false;  
         }
 
 
-        public void save()
+        public bool save()
         {
-            _context.SaveChanges();
+             
+            try
+            {
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                 
+                return false;
+            }
         }
         public void Dispose()
         {

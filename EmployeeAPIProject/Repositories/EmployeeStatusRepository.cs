@@ -22,15 +22,10 @@ namespace EmployeeAPIProject.Repositories
         {
             return _context.Set<EmployeeStatus>().FirstOrDefault(e => e.StatusId == id);
         }
-
+         
         public void Dispose()
         {
             _context?.Dispose();
-        }
-
-        private void save()
-        {
-            _context.SaveChanges();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace EmployeeAPIProject.Services
 
         public void delete(Guid id)
         {
-            _employeeRepository.delete(id);
+            _employeeRepository.Delete(id);
         }
 
         public IEnumerable<EmployeeDTO> Get()

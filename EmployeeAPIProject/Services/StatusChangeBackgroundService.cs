@@ -35,7 +35,7 @@ namespace EmployeeAPIProject.Services
                             if (emp != null)
                             {
                                 employee.StatusId = emp.StatusId; // Change status as needed
-                                employee.StatusChangeDate = null;                                          // Reset the status change date                                             // Handle other status change actio
+                                employee.StatusChangeDate = null; // Reset the status change date                                            
                                 dbContext.SaveChanges();
                             }
                         }
