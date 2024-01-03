@@ -6,6 +6,4 @@ public interface IEmployeeSupervisorService
 {
     IEnumerable<EmployeeSupervisor> Get();
     void Add(EmployeeSupervisor supervisor);
-    
-    
 }

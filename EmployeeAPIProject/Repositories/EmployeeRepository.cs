@@ -1,8 +1,5 @@
-﻿using EmployeeAPIProject.Data;
-using EmployeeAPIProject.Migrations;
+﻿
 using EmployeeAPIProject.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIProject.Repositories;

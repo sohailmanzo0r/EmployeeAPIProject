@@ -1,11 +1,9 @@
-﻿using EmployeeAPIProject.Data;
-using EmployeeAPIProject.Migrations;
+﻿
 using EmployeeAPIProject.Models;
-using EmployeeAPIProject.Repositories;
 using EmployeeAPIProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+ 
 namespace EmployeeAPIProject.Controllers;
 
      [Authorize]
