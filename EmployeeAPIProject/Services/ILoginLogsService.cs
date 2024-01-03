@@ -1,10 +1,9 @@
 ﻿using EmployeeAPIProject.Models;
 
-namespace EmployeeAPIProject.Services
+namespace EmployeeAPIProject.Services;
+
+public interface ILoginLogsService
 {
-    public interface ILoginLogsService
-    {
-        Employee LoginUser(Login user);
-        public string GenerateJwtToken(Employee user);
-    }
+    Employee LoginUser(Login user);
+    public string GenerateJwtToken(Employee user);
 }

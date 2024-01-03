@@ -1,9 +1,8 @@
 ﻿using EmployeeAPIProject.Models;
 using EmployeeAPIProject.Services;
 using Microsoft.AspNetCore.Mvc;
+namespace EmployeeAPIProject.Controllers;
 
-namespace EmployeeAPIProject.Controllers
-{
     [ApiController]
     [Route("api/employees/jobDescription")]
 
@@ -22,5 +21,17 @@ namespace EmployeeAPIProject.Controllers
 
             return Ok(_jobDescriptionService.Get());
         }
+        [HttpPost]
+        public IActionResult Add(JobDescription addjob)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _jobDescriptionService.Add(addjob);
+
+                return Ok(addjob);
+            }
+            return NotFound();
+        }
     }
-}
+

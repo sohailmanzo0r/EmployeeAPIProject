@@ -1,25 +1,31 @@
 ﻿using EmployeeAPIProject.Models;
 using EmployeeAPIProject.Repositories;
 
-namespace EmployeeAPIProject.Services
+namespace EmployeeAPIProject.Services;
+
+public class JobDescriptionService : IJobDescriptionService
 {
-    public class JobDescriptionService : IJobDescriptionService
+    private readonly IJobDescription _jobDescription;
+
+    public JobDescriptionService(IJobDescription jobDescription)
     {
-        private readonly IJobDescription _jobDescription;
+         _jobDescription = jobDescription;
+    }
 
-        public JobDescriptionService(IJobDescription jobDescription)
-        {
-             _jobDescription = jobDescription;
-        }
+    public void Add(JobDescription addJob)
 
-        public JobDescription Get(Guid jobId)
-        {
-            return _jobDescription.Get(jobId);
-        }
+    {
+        addJob.JobId = new Guid();
+           _jobDescription.Add(addJob);
+    }
 
-        public IEnumerable<JobDescription> Get()
-        {
-          return  _jobDescription.Get();
-        }
+    public JobDescription Get(Guid jobId)
+    {
+        return _jobDescription.Get(jobId);
+    }
+
+    public IEnumerable<JobDescription> Get()
+    {
+      return  _jobDescription.Get();
     }
 }

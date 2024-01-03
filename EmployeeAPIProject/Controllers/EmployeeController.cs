@@ -6,22 +6,21 @@ using EmployeeAPIProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+namespace EmployeeAPIProject.Controllers;
 
-namespace EmployeeAPIProject.Controllers
-{
-  [Authorize]
+     [Authorize]
     [ApiController]
     [Route("api/employees")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
-        private readonly IUtilityService _utilityService;
+         
 
-        public EmployeeController(IEmployeeService employeeService, IUtilityService utilityService)
+        public EmployeeController(IEmployeeService employeeService)
         {
              
              _employeeService = employeeService;
-           _utilityService = utilityService;
+           
         }
        
         [HttpGet]
@@ -40,7 +39,7 @@ namespace EmployeeAPIProject.Controllers
               
                 return Ok(addedemployee);
             }
-            return NotFound();
+            return BadRequest();
 
         }
        
@@ -75,12 +74,7 @@ namespace EmployeeAPIProject.Controllers
             return Ok();
         }
 
-        private string calculateAge(DateTime dob)
-
-        {
-           return _utilityService.calculateAge(dob);
-        }
          
     }
 
-}
+

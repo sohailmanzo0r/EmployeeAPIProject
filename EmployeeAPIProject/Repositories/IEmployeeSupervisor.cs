@@ -1,11 +1,11 @@
 ﻿using EmployeeAPIProject.Models;
 
-namespace EmployeeAPIProject.Repositories
+namespace EmployeeAPIProject.Repositories;
+
+public interface IEmployeeSupervisor
 {
-    public interface IEmployeeSupervisor
-    {
-        IEnumerable<EmployeeSupervisor> Get();
-        void Add(EmployeeSupervisor supervisor);
- 
-    }
+    IEnumerable<EmployeeSupervisor> Get();
+    public bool Add(EmployeeSupervisor supervisor);
+
+
 }

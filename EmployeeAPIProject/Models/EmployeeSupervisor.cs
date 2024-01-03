@@ -1,24 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeAPIProject.Models
+namespace EmployeeAPIProject.Models;
+
+public class EmployeeSupervisor
 {
-    public class EmployeeSupervisor
-    {
-        [Key]
-        public Guid SupervisorId { get; set; }
+    [Key]
+    public Guid SupervisorId { get; set; }
 
-        [Key]
-        public Guid EmployeeId { get; set; }
+    [Key]
+    public Guid EmployeeId { get; set; }
 
-        public string SupervisorType { get; set; }
+    public string SupervisorType { get; set; }
 
-        // Navigation Properties
-        public Employee Employee { get; set; }
-    }
-    public class SupervisorDTO
-    {
-        public Guid SupervisorId { get; set; }
-        public Guid EmployeeId { get; set; }
-        public string SupervisorType { get; set; }
-    }
+    // Navigation Properties
+    public Employee Employee { get; set; }
 }

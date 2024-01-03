@@ -1,15 +1,14 @@
 ﻿using EmployeeAPIProject.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmployeeAPIProject.Services
+namespace EmployeeAPIProject.Services;
+
+public interface IEmployeeService
 {
-    public interface IEmployeeService
-    {
-         IEnumerable<EmployeeDTO> Get();
-        void Add(Employee addedemployee);
-        EmployeeDTO Get([FromRoute] Guid id);
-        void Update([FromRoute] Guid id, Employee EmployeeUpdateRequest);
-        void delete(Guid id);
-      
-    }
+     IEnumerable<EmployeeDTO> Get();
+    void Add(Employee addedemployee);
+    EmployeeDTO Get(Guid id);
+    void Update(Guid id, Employee EmployeeUpdateRequest);
+    void delete(Guid id);
+  
 }

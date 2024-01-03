@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeAPIProject.Models
+namespace EmployeeAPIProject.Models;
+
+public class JobDescription
 {
-    public class JobDescription
-    {
 
-        [Key]
-        public Guid JobId { get; set; }
-        public string JobTitle { get; set; }
-        public string Responsibilities { get; set; }
+    [Key]
+    public Guid JobId { get; set; }
+    public string JobTitle { get; set; }
+    public string Responsibilities { get; set; }
 
-        // Navigation Property
-        public List<Employee> Employees { get; set; }
-    }
+    // Navigation Property
+    public List<Employee> Employees { get; set; }
 }

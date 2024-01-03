@@ -2,37 +2,58 @@
 using EmployeeAPIProject.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeAPIProject.Repositories
+namespace EmployeeAPIProject.Repositories;
+
+public class JobDescriptionRepository : IJobDescription, IDisposable
 {
-    public class JobDescriptionRepository : IJobDescription, IDisposable
+    private readonly DbContext _context;
+
+    public JobDescriptionRepository(DbContext context)
     {
-        private readonly DbContext _context;
+        _context = context;
+    }
 
-        public JobDescriptionRepository(DbContext context)
+    public IEnumerable<JobDescription> Get()
+    {
+        return _context.Set<JobDescription>().ToList();
+    }
+
+    public JobDescription Get(Guid jobId)
+    {
+        return _context.Set<JobDescription>().FirstOrDefault(e => e.JobId == jobId);
+    }
+    public bool Add(JobDescription addJob)
+    {
+        try
         {
-            _context = context;
+            _context.Set<JobDescription>().Add(addJob);
+            return save();
         }
-
-        public IEnumerable<JobDescription> Get()
+        catch (Exception)
         {
-            return _context.Set<JobDescription>().ToList();
+            return false;
         }
-
-        public JobDescription Get(Guid jobId)
-        {
-            return _context.Set<JobDescription>().FirstOrDefault(e => e.JobId == jobId);
-        }
+    }
 
 
-        private void save()
+    public bool save()
+    {
+
+        try
         {
             _context.SaveChanges();
+            return true;
         }
-        public void Dispose()
+        catch (Exception)
         {
-            _context?.Dispose();
-        }
 
-       
+            return false;
+        }
     }
+    public void Dispose()
+    {
+        _context?.Dispose();
+    }
+
+   
 }

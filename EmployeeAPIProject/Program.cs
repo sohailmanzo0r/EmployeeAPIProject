@@ -75,15 +75,9 @@ builder.Services.AddScoped<IEmployeeStatus, EmployeeStatusRepository>();
 builder.Services.AddScoped<IEmployeeSupervisor, EmployeeSupervisorRepository>();
 builder.Services.AddScoped<IJobDescription, JobDescriptionRepository>();
 builder.Services.AddScoped<ILoginLogs, LoginLogsRepository>();
-builder.Services.AddScoped<IUtilityService, UtilityService>();
 builder.Services.AddScoped<DbContext, EmployeeDbContext>();
 
 builder.Services.AddHostedService<StatusChangeBackgroundService>();
-
-
-//builder.Services.AddTransient<EmployeeDbContext>();
-
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;

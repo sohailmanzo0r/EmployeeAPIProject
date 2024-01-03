@@ -2,9 +2,8 @@
 using EmployeeAPIProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+namespace EmployeeAPIProject.Controllers;
 
-namespace EmployeeAPIProject.Controllers
-{
     [ApiController]
     [Route("api/employees/status")]
 
@@ -29,4 +28,4 @@ namespace EmployeeAPIProject.Controllers
             return Ok(_employeeStatusService.Get());
         }
     }
-}
+

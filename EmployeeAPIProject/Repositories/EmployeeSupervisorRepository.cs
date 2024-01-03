@@ -2,42 +2,59 @@
 using EmployeeAPIProject.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeAPIProject.Repositories
+namespace EmployeeAPIProject.Repositories;
+
+public class EmployeeSupervisorRepository : IEmployeeSupervisor,IDisposable
 {
-    public class EmployeeSupervisorRepository : IEmployeeSupervisor,IDisposable
+    private readonly DbContext _context;
+
+    public EmployeeSupervisorRepository(DbContext context)
     {
-        private readonly DbContext _context;
+        _context = context;
+    }
 
-        public EmployeeSupervisorRepository(DbContext context)
+    public bool Add(EmployeeSupervisor supervisor)
+    {
+        try
         {
-            _context = context;
-        }
-
-        public void Add(EmployeeSupervisor supervisor)
-        {
-            var supervisor1 = new EmployeeSupervisor
+            var supervisorToAdd = new EmployeeSupervisor
             {
                 EmployeeId = supervisor.EmployeeId,
                 SupervisorType = supervisor.SupervisorType
             };
 
-            _context.Set<EmployeeSupervisor>().Add(supervisor1);
-            save();
+            _context.Set<EmployeeSupervisor>().Add(supervisorToAdd);
+            return save(); // Assuming 'save' returns a boolean
         }
-
-        public IEnumerable<EmployeeSupervisor> Get()
+        catch (Exception)
         {
-            return _context.Set<EmployeeSupervisor>().ToList();
+            // Optionally log the exception details here
+            return false;
         }
-        private void save()
+    }
+
+    public IEnumerable<EmployeeSupervisor> Get()
+    {
+        return _context.Set<EmployeeSupervisor>().ToList();
+    }
+    public bool save()
+    {
+
+        try
         {
             _context.SaveChanges();
+            return true;
         }
-        public void Dispose()
+        catch (Exception)
         {
-            _context?.Dispose();
-        }
 
-       
+            return false;
+        }
     }
+    public void Dispose()
+    {
+        _context?.Dispose();
+    }
+
+   
 }

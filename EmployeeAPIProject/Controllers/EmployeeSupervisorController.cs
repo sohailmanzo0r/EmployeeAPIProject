@@ -1,9 +1,8 @@
 ﻿using EmployeeAPIProject.Models;
 using EmployeeAPIProject.Services;
 using Microsoft.AspNetCore.Mvc;
+namespace EmployeeAPIProject.Controllers;
 
-namespace EmployeeAPIProject.Controllers
-{
     [ApiController]
     [Route("api/employees/supervisor")]
 
@@ -36,4 +35,4 @@ namespace EmployeeAPIProject.Controllers
         }
 
     }
-}
+

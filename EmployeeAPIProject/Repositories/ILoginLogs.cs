@@ -1,10 +1,9 @@
 ﻿using EmployeeAPIProject.Models;
 
-namespace EmployeeAPIProject.Repositories
+namespace EmployeeAPIProject.Repositories;
+
+public interface ILoginLogs
 {
-    public interface ILoginLogs
-    {
-        Employee LoginUser(Login user);
-        
-    }
+    Employee LoginUser(Login user);
+    
 }
