@@ -31,9 +31,10 @@ namespace EmployeeAPIProject.Controllers;
         public   IActionResult Add( Employee addedemployee)
         {
 
-            if (ModelState.IsValid)
-            {
-                _employeeService.Add(addedemployee);
+            if (ModelState.IsValid)  // This is a form of initial, surface-level validation, to check if the model
+                                     //  data is valid according to the validation attributes applied to the model properties
+        {
+            _employeeService.Add(addedemployee);
               
                 return Ok(addedemployee);
             }
