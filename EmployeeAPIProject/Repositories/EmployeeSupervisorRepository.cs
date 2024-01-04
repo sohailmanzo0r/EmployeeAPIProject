@@ -15,20 +15,20 @@ public class EmployeeSupervisorRepository : IEmployeeSupervisor,IDisposable
 
     public bool Add(EmployeeSupervisor supervisor)
     {
+        if (supervisor == null)
+            return false;
         try
-        {
-            var supervisorToAdd = new EmployeeSupervisor
-            {
-                EmployeeId = supervisor.EmployeeId,
-                SupervisorType = supervisor.SupervisorType
-            };
-
-            _context.Set<EmployeeSupervisor>().Add(supervisorToAdd);
-            return save(); // Assuming 'save' returns a boolean
+        {     // Check if the supervisor relationship already exists
+            bool exists = _context.Set<EmployeeSupervisor>().Any(es => es.EmployeeId == supervisor.EmployeeId &&
+            es.SupervisorId == supervisor.SupervisorId);
+            if (!exists)
+            { _context.Set<EmployeeSupervisor>().Add(supervisor);
+                return save();}
+            else
+            { return false;}
         }
         catch (Exception)
         {
-            // Optionally log the exception details here
             return false;
         }
     }
@@ -46,10 +46,7 @@ public class EmployeeSupervisorRepository : IEmployeeSupervisor,IDisposable
             return true;
         }
         catch (Exception)
-        {
-
-            return false;
-        }
+        { return false;}
     }
     public void Dispose()
     {

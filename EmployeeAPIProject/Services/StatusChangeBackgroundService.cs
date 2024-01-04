@@ -24,7 +24,7 @@ public class StatusChangeBackgroundService : BackgroundService
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
                 var employees = dbContext.Set<Employee>()
-          .Where(e => e.StatusChangeDate.HasValue && e.StatusChangeDate <= DateTime.Now)
+          .Where(e => e.StatusChangeChoice.ToLower() == "later" && e.StatusChangeDate.HasValue && e.StatusChangeDate <= DateTime.Now)
                 .ToList();
                 if (employees != null)
                 {
@@ -35,7 +35,7 @@ public class StatusChangeBackgroundService : BackgroundService
                         if (emp != null)
                         {
                             employee.StatusId = emp.StatusId; // Change status as needed
-                            employee.StatusChangeDate = null; // Reset the status change date                                            
+                            employee.StatusChangeDate = DateTime.Now; // Reset the status change date                                            
                             dbContext.SaveChanges();
                         }
                     }

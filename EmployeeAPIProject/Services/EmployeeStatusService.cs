@@ -23,12 +23,20 @@ public class EmployeeStatusService : BackgroundService, IEmployeeStatusService
         {
             employee.EmployeeStatus.StatusId = emp.EmployeeStatus.StatusId;
             employee.StatusChangeChoice = emp.StatusChangeChoice;
-            employee.StatusChangeDate = emp.StatusChangeChoice.ToLower() == "later"
-                ? emp.StatusChangeDate
-                : DateTime.Now;
+            if(emp.StatusChangeChoice.ToLower() == "later" && (emp.StatusChangeDate > DateTime.Now))
+            {
+                
+                    employee.StatusChangeDate = emp.StatusChangeDate;
+                    employee.LaterStatus = emp.LaterStatus;
+                
+            }
+            if(emp.StatusChangeChoice.ToLower() == "now" && (emp.StatusChangeDate <= DateTime.Now))
+            {
+                employee.StatusChangeDate = DateTime.Now;
+                employee.StatusId = emp.StatusId;
+            }
             // Store the reason and additional property
             employee.StatusChangeReason = emp.StatusChangeReason;
-            employee.StatusId = emp.StatusId;
             _employeeRepository.save();
         }
 
